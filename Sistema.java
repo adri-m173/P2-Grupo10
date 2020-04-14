@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 public class Sistema implements Serializable {
     private ArrayList<Usuario> usuarios = new ArrayList<>();
+    private ArrayList<Subforo> foro = new ArrayList<>();
 
     public void registrarUsuario(String nick_, String nombre_, String apellidos_, String pass_, String email_){
         Usuario nuevo = new Usuario(nick_, nombre_, apellidos_, pass_, email_);
@@ -25,4 +26,16 @@ public class Sistema implements Serializable {
         }
         return salida;
     }
+    
+    public void añadirSubforo(Subforo subforo_){
+        foro.add(subforo_);
+    }
+
+    public ArrayList<Subforo> getForo() {
+        return foro;
+    }
+
+
+    
+    
 }
