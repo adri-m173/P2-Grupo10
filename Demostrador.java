@@ -3,6 +3,7 @@ import java.util.ArrayList;
 public class Demostrador {
     public static void main(String[] args) {
         Sistema sistema = new Sistema();
+        Foro foro = new Foro();
         Subforo subforo = new Subforo();
         Entrada entrada = new Entrada();
 
@@ -13,10 +14,11 @@ public class Demostrador {
             System.out.println("Error al hacer login");
         };
         subforo.crearSubforo("Titulo de prueba");
-        sistema.añadirSubforo(subforo);
+        foro.aniadirSubforo(subforo);
         System.out.println("Subforo creado correctamente");
         entrada.crearEntrada("Entrada de prueba", "Este es el contenido de una entrada de prueba en el subforo");
-        subforo.añadirEntrada(entrada);
+        entrada.comentar("Este es el contenido del comentario de una entrada de prueba en el subforo");
+        subforo.aniadirEntrada(entrada);
         System.out.println("Entrada añadida correctamente");
     }
 }

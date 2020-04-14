@@ -1,7 +1,6 @@
-import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Usuario implements Serializable {
+public class Usuario {
     private String nick;
     private String nombre;
     private String apellidos;

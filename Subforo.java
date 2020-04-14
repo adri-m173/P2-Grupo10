@@ -7,8 +7,13 @@ public class Subforo {
     public void crearSubforo(String titulo_){
         this.titulo=titulo_;
     }
-    public void añadirEntrada(Entrada entrada_){
+
+    public void aniadirEntrada(Entrada entrada_){
         entradas.add(entrada_);
+    }
+
+    public String getTitulo(){
+        return titulo;
     }
 
     public ArrayList<Entrada> getEntradas() {
