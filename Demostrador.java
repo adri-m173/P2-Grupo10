@@ -1,10 +1,6 @@
 import java.util.ArrayList;
 
-public class PracticaMP {
-
-    /**
-     * @param args the command line arguments
-     */
+public class Demostrador {
     public static void main(String[] args) {
         Sistema sistema = new Sistema();
         Subforo subforo = new Subforo();
