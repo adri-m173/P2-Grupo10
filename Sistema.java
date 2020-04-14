@@ -1,10 +1,19 @@
-package com.p2;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package practicamp;
 
+/**
+ *
+ * @author anton
+ */
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Sistema implements Serializable {
-    private ArrayList<Usuario> usuarios;
+    private ArrayList<Usuario> usuarios = new ArrayList();
 
     public void registrarUsuario(String nick_, String nombre_, String apellidos_, String pass_, String email_){
         Usuario nuevo = new Usuario(nick_, nombre_, apellidos_, pass_, email_);
