@@ -18,7 +18,11 @@ public class Demostrador {
         System.out.println("Subforo creado correctamente");
         entrada.crearEntrada("Entrada de prueba", "Este es el contenido de una entrada de prueba en el subforo");
         entrada.comentar("Este es el contenido del comentario de una entrada de prueba en el subforo");
+        entrada.votarPositivamente();
+        entrada.votarPositivamente();
+        entrada.votarNegativamente();
         subforo.aniadirEntrada(entrada);
         System.out.println("Entrada añadida correctamente");
+        System.out.println(entrada.toString());
     }
 }

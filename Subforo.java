@@ -5,7 +5,7 @@ public class Subforo {
     private ArrayList <Entrada> entradas = new ArrayList<>();
     
     public void crearSubforo(String titulo_){
-        this.titulo=titulo_;
+        this.titulo = titulo_;
     }
 
     public void aniadirEntrada(Entrada entrada_){

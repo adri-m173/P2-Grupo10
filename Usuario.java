@@ -22,39 +22,23 @@ public class Usuario {
         return nick;
     }
 
-    public void setNick(String nick_) {
-        this.nick = nick_;
-    }
-
     public String getNombre() {
         return nombre;
-    }
-
-    public void setNombre(String n_) {
-        this.nombre = n_;
     }
 
     public String getApellidos() {
         return apellidos;
     }
 
-    public void setApellidos(String a_) {
-        this.apellidos = a_;
-    }
-
     public String getPass() {
         return pass;
-    }
-
-    public void setPass(String p_) {
-        this.pass = p_;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String e_) {
-        this.email = e_;
+    public String toString(){
+        return "Nick: " + nick + ", Nombre: " + nombre + ", Apellidos: " + apellidos + ", Email: " + email;
     }
 }
