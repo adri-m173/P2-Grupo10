@@ -37,8 +37,4 @@ public class Usuario {
     public String getEmail() {
         return email;
     }
-
-    public String toString(){
-        return "Nick: " + nick + ", Nombre: " + nombre + ", Apellidos: " + apellidos + ", Email: " + email;
-    }
 }
