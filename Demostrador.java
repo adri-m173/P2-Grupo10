@@ -1,11 +1,8 @@
-import java.util.ArrayList;
+package com.p2;
 
-public class PracticaForo {
+public class Demostrador {
     public static void main(String[] args) {
         Sistema sistema = new Sistema();
-        Foro foro = new Foro();
-        Subforo subforo = new Subforo("Titulo de prueba");
-        Entrada entrada = new Entrada();
 
         sistema.registrarUsuario("usr1", "Usuario", "Uno", "contra","usr1@urjc.es");
         if (sistema.hacerLogin("usr1", "contra")){
@@ -13,15 +10,7 @@ public class PracticaForo {
         } else {
             System.out.println("Error al hacer login");
         };
-        foro.aniadirSubforo(subforo);
-        System.out.println("Subforo creado correctamente");
-        entrada.crearEntrada("Entrada de prueba", "Este es el contenido de una entrada de prueba en el subforo");
-        entrada.comentar("Este es el contenido del comentario de una entrada de prueba en el subforo");
-        entrada.votarPositivamente();
-        entrada.votarPositivamente();
-        entrada.votarNegativamente();
-        subforo.aniadirEntrada(entrada);
-        System.out.println("Entrada añadida correctamente");
-        System.out.println(entrada.toString());
+        sistema.iniciarSubforo();
+        sistema.iniciarEntrada();
     }
 }

@@ -1,3 +1,5 @@
+package com.p2;
+
 import java.util.ArrayList;
 
 public class Foro {
