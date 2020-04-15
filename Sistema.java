@@ -43,12 +43,10 @@ public class Sistema {
 
     public void votarEntradaPositivamente(){
         entrada.votarPositivamente();
-        System.out.println("Has votado positivamente la entrada");
     }
 
     public void votarEntradaNegativamente(){
         entrada.votarNegativamente();
-        System.out.println("Has votado negativamente la entrada");
     }
 
     public void comentarEntrada(String comentario){
