@@ -1,5 +1,3 @@
-package com.p2;
-
 import java.util.ArrayList;
 
 public class Sistema {
@@ -12,19 +10,6 @@ public class Sistema {
         Usuario nuevo = new Usuario(nick_, nombre_, apellidos_, pass_, email_);
         usuarios.add(nuevo);
         System.out.println("Usuario creado correctamente");
-    }
-
-    public void iniciarSubforo() {
-        subforo.crearSubforo("Titulo de prueba");
-        foro.aniadirSubforo(subforo);
-        System.out.println("Subforo creado correctamente");
-    }
-
-    public void iniciarEntrada() {
-        entrada.crearEntrada("Entrada de prueba", "Este es el contenido de una entrada de prueba en el subforo");
-        foro.getForo().get(0).aniadirEntrada(entrada);
-        //añadido al unico subforo creado
-        System.out.println("Entrada añadida correctamente");
     }
 
     public boolean hacerLogin(String nick_, String pass_) {
@@ -41,5 +26,35 @@ public class Sistema {
             }
         }
         return salida;
+    }
+
+    public void iniciarSubforo(String titulo) {
+        subforo.crearSubforo(titulo);
+        foro.aniadirSubforo(subforo);
+        System.out.println("Subforo creado correctamente");
+    }
+
+    public void iniciarEntrada(String titulo, String contenido) {
+        entrada.crearEntrada(titulo, contenido);
+        foro.getForo().get(0).aniadirEntrada(entrada);
+        //añadida al unico subforo creado
+        System.out.println("Entrada añadida correctamente");
+    }
+
+    public void votarEntradaPositivamente(){
+        entrada.votarPositivamente();
+    }
+
+    public void votarEntradaNegativamente(){
+        entrada.votarNegativamente();
+    }
+
+    public void comentarEntrada(String comentario){
+        entrada.comentar(comentario);
+        System.out.println("Comentario realizado");
+    }
+
+    public void mostrarEntrada(){
+        System.out.println(entrada.toString());
     }
 }

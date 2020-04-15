@@ -1,5 +1,3 @@
-package com.p2;
-
 import java.util.ArrayList;
 
 public class Subforo {
@@ -19,11 +17,11 @@ public class Subforo {
         return entradas;
     }
 
-    public void aniadirSubscriptor(Usuario subs) {
+    public void aniadirSubscriptores(Usuario subs){
         usuariosSubscritos.add(subs);
     }
 
-    public void eliminarSubscriptor(Usuario subs){
+    public void eliminarSubscriptores(Usuario subs){
         usuariosSubscritos.remove(subs);
     }
 

@@ -1,5 +1,3 @@
-package com.p2;
-
 public class Demostrador {
     public static void main(String[] args) {
         Sistema sistema = new Sistema();
@@ -10,7 +8,12 @@ public class Demostrador {
         } else {
             System.out.println("Error al hacer login");
         };
-        sistema.iniciarSubforo();
-        sistema.iniciarEntrada();
+        sistema.iniciarSubforo("Titulo del subforo");
+        sistema.iniciarEntrada("Titulo de entrada de prueba", "Contenido de la entrada de prueba");
+        sistema.votarEntradaPositivamente();
+        sistema.votarEntradaPositivamente();
+        sistema.votarEntradaNegativamente();
+        sistema.comentarEntrada("Esto es un comentario");
+        sistema.mostrarEntrada();
     }
 }
