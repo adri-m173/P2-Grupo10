@@ -1,15 +1,30 @@
+package practicamp2;
+
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Sistema {
     private ArrayList<Usuario> usuarios = new ArrayList<>();
     private Entrada entrada = new Entrada();
     private Subforo subforo = new Subforo();
     private Foro foro = new Foro();
+    private String s1 = "urjc.es";
+    private String s2 = "alumnos.urjc.es";
 
     public void registrarUsuario(String nick_, String nombre_, String apellidos_, String pass_, String email_) {
         Usuario nuevo = new Usuario(nick_, nombre_, apellidos_, pass_, email_);
-        usuarios.add(nuevo);
-        System.out.println("Usuario creado correctamente");
+        Scanner sc = new Scanner(email_);
+        sc.useDelimiter("@");
+        sc.next();
+        String s = sc.next();
+        System.out.println(s);
+        if (s.equals(s1) || s.equals(s2)){
+            usuarios.add(nuevo);
+            System.out.println("Usuario creado correctamente");
+        }
+        else {
+            System.out.println("El correo introducido no es valido");
+        }
     }
 
     public boolean hacerLogin(String nick_, String pass_) {
@@ -27,7 +42,26 @@ public class Sistema {
         }
         return salida;
     }
-
+    public boolean comprobarusuario(String nick){
+        int j;
+        boolean salida;
+        salida = false;
+        int i = 0;
+        boolean encontrado=false;
+        for (j=0;j<=usuarios.size();j++){
+            if(!encontrado){
+                Usuario u = usuarios.get(i);
+                encontrado = u.comprobarnick(nick, u);
+                if (!encontrado)
+                    i++;
+            }
+        }
+        if (encontrado) {
+            Usuario u = usuarios.get(i);
+            salida = u.comprobarbaneo(u);
+        }
+        return salida;
+    }    
     public void iniciarSubforo(String titulo) {
         subforo.crearSubforo(titulo);
         foro.aniadirSubforo(subforo);

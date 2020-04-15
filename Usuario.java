@@ -1,3 +1,4 @@
+package practicamp2;
 import java.util.ArrayList;
 
 public class Usuario {
@@ -6,6 +7,7 @@ public class Usuario {
     private String apellidos;
     private String pass;
     private String email;
+    private boolean baneado;
     private ArrayList<String> notificaciones;
 
     public Usuario(String nick_, String n_, String a_, String p_, String e_){
@@ -14,6 +16,7 @@ public class Usuario {
         apellidos = a_;
         pass = p_;
         email = e_;
+        this.baneado=false;
     }
 
     public void recibirNotificacion(String noti){}
@@ -36,5 +39,21 @@ public class Usuario {
 
     public String getEmail() {
         return email;
+    }
+
+    public void UsuarioBaneado() {
+        baneado = true;
+    }
+
+    public void UsuarioDesBaneado() {
+        baneado = false;
+    }
+
+    public boolean comprobarnick(String nick, Usuario u) {
+        return nick==u.nick;
+    }
+
+    public boolean comprobarbaneo(Usuario u) {
+        return u.baneado;
     }
 }
