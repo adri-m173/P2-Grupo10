@@ -18,9 +18,13 @@ public class Sistema {
         sc.next();
         String s = sc.next();
         System.out.println(s);
-        if (s.equals(s1) || s.equals(s2)){
+        if (s.equals(s1)) {
             usuarios.add(nuevo);
-            System.out.println("Usuario creado correctamente");
+            System.out.println("Usuario como profesor creado correctamente");
+        }
+        else if (s.equals(s2)) {
+            usuarios.add(nuevo);
+            System.out.println("Usuario como alumno creado correctamente");
         }
         else {
             System.out.println("El correo introducido no es valido");
