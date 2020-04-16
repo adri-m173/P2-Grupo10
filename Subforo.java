@@ -6,7 +6,7 @@ public class Subforo {
     private ArrayList <Entrada> entradas = new ArrayList<>();
     private ArrayList <Usuario> usuariosSubscritos = new ArrayList<>();
 
-    public void crearSubforo(String titulo_){
+    public Subforo(String titulo_){
         this.titulo=titulo_;
     }
 
