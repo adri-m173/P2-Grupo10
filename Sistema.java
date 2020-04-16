@@ -5,8 +5,6 @@ import java.util.Scanner;
 
 public class Sistema {
     private ArrayList<Usuario> usuarios = new ArrayList<>();
-    private Entrada entrada = new Entrada();
-    private Subforo subforo = new Subforo();
     private Foro foro = new Foro();
     private String s1 = "urjc.es";
     private String s2 = "alumnos.urjc.es";
@@ -66,35 +64,38 @@ public class Sistema {
         }
         return salida;
     }    
-    public void iniciarSubforo(String titulo) {
-        subforo.crearSubforo(titulo);
-        foro.aniadirSubforo(subforo);
+    public Subforo iniciarSubforo(String titulo) {
+        Subforo nuevoSubforo = new Subforo(titulo);
+        foro.aniadirSubforo(nuevoSubforo);
         System.out.println("Subforo creado correctamente");
+        return nuevoSubforo;
     }
 
-    public void iniciarEntrada(String titulo, String contenido) {
-        entrada.crearEntrada(titulo, contenido);
-        foro.getForo().get(0).aniadirEntrada(entrada);
+    public Entrada iniciarEntrada(String titulo, String contenido) {
+        Entrada nuevaEntrada = new Entrada(titulo, contenido);
+        //TODO HAY QUE PODER A�ADIR LA ENTRADA A CUALQUIER SUBFORO
+        foro.getForo().get(0).aniadirEntrada(nuevaEntrada);
         //añadida al unico subforo creado
         System.out.println("Entrada añadida correctamente");
+        return nuevaEntrada;
     }
 
-    public void votarEntradaPositivamente(){
+    public void votarEntradaPositivamente(Entrada entrada){
         entrada.votarPositivamente();
         System.out.println("Has votado positivamente la entrada");
     }
 
-    public void votarEntradaNegativamente(){
+    public void votarEntradaNegativamente(Entrada entrada){
         entrada.votarNegativamente();
         System.out.println("Has votado negativamente la entrada");
     }
 
-    public void comentarEntrada(String comentario){
+    public void comentarEntrada(Entrada entrada, String comentario){
         entrada.comentar(comentario);
         System.out.println("Comentario realizado");
     }
 
-    public void mostrarEntrada(){
+    public void mostrarEntrada(Entrada entrada){
         System.out.println(entrada.toString());
     }
 }

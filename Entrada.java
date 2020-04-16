@@ -7,7 +7,7 @@ public class Entrada {
     private int puntuacion;
     private ArrayList<String> comentarios = new ArrayList<>();
     
-    public void crearEntrada(String titulo_,String contenido_){
+    public Entrada(String titulo_,String contenido_){
         this.titulo = titulo_;
         this.contenido = contenido_;
         this.puntuacion = 0;
