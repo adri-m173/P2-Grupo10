@@ -19,7 +19,9 @@ public class Usuario {
         this.baneado=false;
     }
 
-    public void recibirNotificacion(String noti){}
+    public void recibirNotificacion(String noti){
+        notificaciones.add(noti);
+    }
 
     public String getNick() {
         return nick;
