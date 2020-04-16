@@ -1,5 +1,3 @@
-package practicamp2;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -63,39 +61,56 @@ public class Sistema {
             salida = u.comprobarbaneo(u);
         }
         return salida;
-    }    
+    }
     public Subforo iniciarSubforo(String titulo) {
         Subforo nuevoSubforo = new Subforo(titulo);
         foro.aniadirSubforo(nuevoSubforo);
-        System.out.println("Subforo creado correctamente");
+        System.out.println("Subforo " + "'" + nuevoSubforo.getTitulo() + "'" + " creado correctamente");
         return nuevoSubforo;
     }
 
-    public Entrada iniciarEntrada(String titulo, String contenido) {
+    public Entrada iniciarEntrada(String titulo, String contenido, int numSubforo) {
         Entrada nuevaEntrada = new Entrada(titulo, contenido);
-        //TODO HAY QUE PODER A�ADIR LA ENTRADA A CUALQUIER SUBFORO
-        foro.getForo().get(0).aniadirEntrada(nuevaEntrada);
+        //TODO HAY QUE PODER ANIADIR LA ENTRADA A CUALQUIER SUBFORO
+        foro.getForo().get(numSubforo).aniadirEntrada(nuevaEntrada);
         //añadida al unico subforo creado
-        System.out.println("Entrada añadida correctamente");
+        System.out.println("Entrada " + "'" + nuevaEntrada.getTitulo() + "'" + " añadida correctamente al subforo: " + foro.getForo().get(numSubforo).getTitulo());
         return nuevaEntrada;
+    }
+
+    public void comentarEntrada(Entrada entrada, String comentario){
+        entrada.comentarEntrada(comentario);
+        System.out.println("Comentario realizado en la entrada: " + entrada.getTitulo());
     }
 
     public void votarEntradaPositivamente(Entrada entrada){
         entrada.votarPositivamente();
-        System.out.println("Has votado positivamente la entrada");
+        System.out.println("Has votado positivamente la entrada: " + entrada.getTitulo());
     }
 
-    public void votarEntradaNegativamente(Entrada entrada){
+    public void votarEntradaNegativamente(Entrada entrada) {
         entrada.votarNegativamente();
-        System.out.println("Has votado negativamente la entrada");
+        System.out.println("Has votado negativamente la entrada: " + entrada.getTitulo());
     }
 
-    public void comentarEntrada(Entrada entrada, String comentario){
-        entrada.comentar(comentario);
-        System.out.println("Comentario realizado");
+    public void votarComentarioPositivamente(Entrada entrada, int numeroComent) {
+        entrada.getComentarios().get(numeroComent).votarPositivamente();
+        System.out.println("Has votado positivamente el comentario " + numeroComent + " de la entrada: " + entrada.getTitulo());
+    }
+
+    public void votarComentarioNegativamente(Entrada entrada, int numeroComent) {
+        entrada.getComentarios().get(numeroComent).votarNegativamente();
+        System.out.println("Has votado negativamente el comentario " + numeroComent + " de la entrada: " + entrada.getTitulo());
     }
 
     public void mostrarEntrada(Entrada entrada){
-        System.out.println(entrada.toString());
+        System.out.println("Titulo: " + entrada.getTitulo() + ". Contenido: " + entrada.getContenido() + ". Puntuacion: " + entrada.getPuntuacion());
+    }
+
+    public void mostrarComentarios(Entrada entrada){
+        System.out.println("Los comentarios de la entrada: " + entrada.getTitulo() + " son: ");
+        for (int i = 0; i <= entrada.getComentarios().size(); i++) {
+            System.out.println(i+1 + ": " + entrada.getComentarios().get(i).getComentario() + " / Puntuacion: " + entrada.getComentarios().get(i).getPuntuacion());
+        }
     }
 }

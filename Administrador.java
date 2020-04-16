@@ -1,5 +1,3 @@
-package practicamp2;
-
 public class Administrador extends Usuario {
     
     public Administrador(String nick_, String n_, String a_, String p_, String e_) {

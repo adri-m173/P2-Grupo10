@@ -1,20 +1,20 @@
-package practicamp2;
 import java.util.ArrayList;
 
 public class Entrada {
     private String titulo;
     private String contenido;
     private int puntuacion;
-    private ArrayList<String> comentarios = new ArrayList<>();
-    
+    private ArrayList<Comentario> comentarios = new ArrayList<>();
+
     public Entrada(String titulo_,String contenido_){
         this.titulo = titulo_;
         this.contenido = contenido_;
         this.puntuacion = 0;
     }
 
-    public void comentar(String comentario_){
-        comentarios.add(comentario_);
+    public void comentarEntrada(String comentario_) {
+        Comentario coment = new Comentario(comentario_);
+        comentarios.add(coment);
     }
 
     public void votarPositivamente(){
@@ -33,12 +33,11 @@ public class Entrada {
         return contenido;
     }
 
-    public ArrayList<String> getComentarios(){
-        return comentarios;
+    public int getPuntuacion() {
+        return puntuacion;
     }
 
-    public String toString(){
-        return "Titulo: " + titulo + ". Contenido: " + contenido + ". Puntuacion: " + puntuacion;
+    public ArrayList<Comentario> getComentarios() {
+        return comentarios;
     }
-    
 }
