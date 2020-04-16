@@ -36,6 +36,7 @@ public class Sistema {
         for (Usuario usr : usuarios) {
             if (usr.getNick().equals(nick_) && usr.getPass().equals(pass_)) {
                 salida = true;
+                System.out.println("Bienvenido, " + usr.getNombre() + " " + usr.getApellidos());
             } else {
                 salida = false;
             }
@@ -71,7 +72,6 @@ public class Sistema {
 
     public Entrada iniciarEntrada(String titulo, String contenido, int numSubforo) {
         Entrada nuevaEntrada = new Entrada(titulo, contenido);
-        //TODO HAY QUE PODER ANIADIR LA ENTRADA A CUALQUIER SUBFORO
         foro.getForo().get(numSubforo).aniadirEntrada(nuevaEntrada);
         //añadida al unico subforo creado
         System.out.println("Entrada " + "'" + nuevaEntrada.getTitulo() + "'" + " añadida correctamente al subforo: " + foro.getForo().get(numSubforo).getTitulo());
@@ -104,6 +104,7 @@ public class Sistema {
     }
 
     public void mostrarEntrada(Entrada entrada){
+        System.out.println("Mostrando entrada:");
         System.out.println("Titulo: " + entrada.getTitulo() + ". Contenido: " + entrada.getContenido() + ". Puntuacion: " + entrada.getPuntuacion());
     }
 
