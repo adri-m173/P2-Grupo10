@@ -4,17 +4,14 @@ import java.util.Scanner;
 public class Sistema {
     private ArrayList<Usuario> usuarios = new ArrayList<>();
     private Foro foro = new Foro();
-    private String s1 = "urjc.es";
-    private String s2 = "alumnos.urjc.es";
 
     private boolean estaDisponible(String email, String nick) {
         boolean salida = true;
-        if (usuarios.size() == 0) {
-            salida = true;
-        } else {
+        if (usuarios.size() > 0) {
             for (Usuario usr: usuarios) {
                 if (usr.getEmail().equals(email) && usr.getNick().equals(nick)) {
                     salida = false;
+                    break;
                 }
             }
         }
@@ -31,6 +28,8 @@ public class Sistema {
         sc.next();
         String s = sc.next();
         System.out.println(s);
+        String s1 = "urjc.es";
+        String s2 = "alumnos.urjc.es";
         if (s.equals(s1)) {
             usuarios.add(nuevoUsuario);
             System.out.println("Usuario como profesor creado correctamente");
@@ -103,7 +102,6 @@ public class Sistema {
         Entrada nuevaEntrada = new Entrada(titulo, contenido);
         foro.getForo().get(numSubforo).aniadirEntrada(nuevaEntrada);
         foro.getForo().get(numSubforo).notificar();
-        //añadida al unico subforo creado
         System.out.println("Entrada " + "'" + nuevaEntrada.getTitulo() + "'" + " añadida correctamente al subforo: " + foro.getForo().get(numSubforo).getTitulo());
         return nuevaEntrada;
     }
