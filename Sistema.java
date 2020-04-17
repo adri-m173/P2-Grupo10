@@ -7,23 +7,42 @@ public class Sistema {
     private String s1 = "urjc.es";
     private String s2 = "alumnos.urjc.es";
 
+    private boolean estaDisponible(String email, String nick) {
+        boolean salida = true;
+        if (usuarios.size() == 0) {
+            salida = true;
+        } else {
+            for (int i = 0; i <= usuarios.size(); i++) {
+                if (usuarios.get(i).getEmail().equals(email) && usuarios.get(i).getNick().equals(nick)) {
+                    salida = false;
+                }
+            }
+        }
+        return salida;
+    }
+
     public void registrarUsuario(String nick_, String nombre_, String apellidos_, String pass_, String email_) {
-        Usuario nuevo = new Usuario(nick_, nombre_, apellidos_, pass_, email_);
-        Scanner sc = new Scanner(email_);
-        sc.useDelimiter("@");
-        sc.next();
-        String s = sc.next();
-        System.out.println(s);
-        if (s.equals(s1)) {
-            usuarios.add(nuevo);
-            System.out.println("Usuario como profesor creado correctamente");
-        }
-        else if (s.equals(s2)) {
-            usuarios.add(nuevo);
-            System.out.println("Usuario como alumno creado correctamente");
-        }
-        else {
-            System.out.println("El correo introducido no es valido");
+        if (estaDisponible(email_, nick_)) {
+            Usuario nuevoUsuario = new Usuario(nick_, nombre_, apellidos_, pass_, email_);
+            Scanner sc = new Scanner(email_);
+            sc.useDelimiter("@");
+            sc.next();
+            String s = sc.next();
+            System.out.println(s);
+            if (s.equals(s1)) {
+                usuarios.add(nuevoUsuario);
+                System.out.println("Usuario como profesor creado correctamente");
+            }
+            else if (s.equals(s2)) {
+                usuarios.add(nuevoUsuario);
+                System.out.println("Usuario como alumno creado correctamente");
+            }
+            else {
+                System.out.println("El correo introducido no es valido");
+            }
+            sc.close();
+        } else {
+            System.out.println("Error. El email o nick utilizado ya esta en uso");
         }
     }
 
@@ -47,6 +66,7 @@ public class Sistema {
         }
         return salida;
     }
+
     public boolean comprobarusuario(String nick){
         int j;
         boolean salida;
@@ -67,16 +87,17 @@ public class Sistema {
         }
         return salida;
     }
+
     public Subforo iniciarSubforo(String titulo) {
         Subforo nuevoSubforo = new Subforo(titulo);
         foro.aniadirSubforo(nuevoSubforo);
         System.out.println("Subforo " + "'" + nuevoSubforo.getTitulo() + "'" + " creado correctamente");
         return nuevoSubforo;
     }
-    
+
     public void subscribirse(Usuario usuario, int numSubforo){
-       Subforo subforo = foro.getForo().get(numSubforo);
-       subforo.aniadirSubscriptor(usuario);
+        Subforo subforo = foro.getForo().get(numSubforo);
+        subforo.aniadirSubscriptor(usuario);
     }
 
     public Entrada iniciarEntrada(String titulo, String contenido, int numSubforo) {
@@ -124,10 +145,8 @@ public class Sistema {
             System.out.println(i+1 + ": " + entrada.getComentarios().get(i).getComentario() + " / Puntuacion: " + entrada.getComentarios().get(i).getPuntuacion());
         }
     }
-    
+
     public void mostrarNotificaciones(Usuario usuario){
         usuario.verNotificaciones();
     }
-    
-    
 }
