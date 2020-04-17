@@ -27,6 +27,10 @@ public class Sistema {
         }
     }
 
+    public ArrayList<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
     public boolean hacerLogin(String nick_, String pass_) {
         boolean salida = false;
         if (usuarios == null || usuarios.size() <= 0) {
@@ -69,10 +73,16 @@ public class Sistema {
         System.out.println("Subforo " + "'" + nuevoSubforo.getTitulo() + "'" + " creado correctamente");
         return nuevoSubforo;
     }
+    
+    public void subscribirse(Usuario usuario, int numSubforo){
+       Subforo subforo = foro.getForo().get(numSubforo);
+       subforo.aniadirSubscriptor(usuario);
+    }
 
     public Entrada iniciarEntrada(String titulo, String contenido, int numSubforo) {
         Entrada nuevaEntrada = new Entrada(titulo, contenido);
         foro.getForo().get(numSubforo).aniadirEntrada(nuevaEntrada);
+        foro.getForo().get(numSubforo).notificar();
         //añadida al unico subforo creado
         System.out.println("Entrada " + "'" + nuevaEntrada.getTitulo() + "'" + " añadida correctamente al subforo: " + foro.getForo().get(numSubforo).getTitulo());
         return nuevaEntrada;
@@ -114,4 +124,10 @@ public class Sistema {
             System.out.println(i+1 + ": " + entrada.getComentarios().get(i).getComentario() + " / Puntuacion: " + entrada.getComentarios().get(i).getPuntuacion());
         }
     }
+    
+    public void mostrarNotificaciones(Usuario usuario){
+        usuario.verNotificaciones();
+    }
+    
+    
 }

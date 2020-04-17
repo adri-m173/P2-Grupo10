@@ -9,6 +9,10 @@ public class Subforo {
         this.titulo=titulo_;
     }
 
+    public String getTitulo() {
+        return titulo;
+    }
+
     public void aniadirEntrada(Entrada entrada_){
         entradas.add(entrada_);
     }
@@ -17,16 +21,16 @@ public class Subforo {
         return entradas;
     }
 
-    public void aniadirSubscriptores(Usuario subs){
+    public void aniadirSubscriptor(Usuario subs){
         usuariosSubscritos.add(subs);
     }
 
-    public void eliminarSubscriptores(Usuario subs){
+    public void eliminarSubscriptor(Usuario subs){
         usuariosSubscritos.remove(subs);
     }
 
     public void notificar(){
-        String notificacion = "Una nueva entrada ha sido añadida en el subforo:" + titulo;
+        String notificacion = "Una nueva entrada ha sido anadida en el subforo:" + titulo;
         for (Usuario x: usuariosSubscritos){
             x.recibirNotificacion(notificacion);
         }

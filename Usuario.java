@@ -21,6 +21,11 @@ public class Usuario {
     public void recibirNotificacion(String noti){
         notificaciones.add(noti);
     }
+    
+    public void verNotificaciones(){
+        System.out.println("Tienes las siguientes notificaciones: " + notificaciones.toString());
+    }
+    
 
     public String getNick() {
         return nick;
