@@ -12,8 +12,8 @@ public class Sistema {
         if (usuarios.size() == 0) {
             salida = true;
         } else {
-            for (int i = 0; i <= usuarios.size(); i++) {
-                if (usuarios.get(i).getEmail().equals(email) && usuarios.get(i).getNick().equals(nick)) {
+            for (Usuario usr: usuarios) {
+                if (usr.getEmail().equals(email) && usr.getNick().equals(nick)) {
                     salida = false;
                 }
             }
@@ -22,28 +22,27 @@ public class Sistema {
     }
 
     public void registrarUsuario(String nick_, String nombre_, String apellidos_, String pass_, String email_) {
-        if (estaDisponible(email_, nick_)) {
-            Usuario nuevoUsuario = new Usuario(nick_, nombre_, apellidos_, pass_, email_);
-            Scanner sc = new Scanner(email_);
-            sc.useDelimiter("@");
-            sc.next();
-            String s = sc.next();
-            System.out.println(s);
-            if (s.equals(s1)) {
-                usuarios.add(nuevoUsuario);
-                System.out.println("Usuario como profesor creado correctamente");
-            }
-            else if (s.equals(s2)) {
-                usuarios.add(nuevoUsuario);
-                System.out.println("Usuario como alumno creado correctamente");
-            }
-            else {
-                System.out.println("El correo introducido no es valido");
-            }
-            sc.close();
-        } else {
+        while (!estaDisponible(email_, nick_)) {
             System.out.println("Error. El email o nick utilizado ya esta en uso");
         }
+        Usuario nuevoUsuario = new Usuario(nick_, nombre_, apellidos_, pass_, email_);
+        Scanner sc = new Scanner(email_);
+        sc.useDelimiter("@");
+        sc.next();
+        String s = sc.next();
+        System.out.println(s);
+        if (s.equals(s1)) {
+            usuarios.add(nuevoUsuario);
+            System.out.println("Usuario como profesor creado correctamente");
+        }
+        else if (s.equals(s2)) {
+            usuarios.add(nuevoUsuario);
+            System.out.println("Usuario como alumno creado correctamente");
+        }
+        else {
+            System.out.println("El correo introducido no es valido");
+        }
+        sc.close();
     }
 
     public ArrayList<Usuario> getUsuarios() {
