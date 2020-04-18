@@ -1,4 +1,3 @@
-package practicamp2;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -59,6 +58,7 @@ public class Sistema {
         for (Usuario usr : usuarios) {
             if (usr.getNick().equals(nick_) && usr.getPass().equals(pass_)) {
                 sesionIniciada = true;
+                System.out.println("Login realizado correctamente");
                 System.out.println("Bienvenido, " + usr.getNombre() + " " + usr.getApellidos());
             } else {
                 sesionIniciada = false;
@@ -68,9 +68,7 @@ public class Sistema {
     }
     public void hacerLogout (){
         sesionIniciada = false;
-            if (!sesionIniciada){
-                System.out.println("Sesión Cerrada Correctamente");
-            }
+        System.out.println("Sesión Cerrada Correctamente");
     }
     public boolean comprobarusuario(String nick){
         int j;
@@ -105,33 +103,32 @@ public class Sistema {
         subforo.aniadirSubscriptor(usuario);
     }
 
-    public Entrada añadirSubforo(Entrada nuevaEntrada, int numSubforo) {
+    public void aniadirASubforo(Entrada nuevaEntrada, int numSubforo) {
         foro.getForo().get(numSubforo).aniadirEntrada(nuevaEntrada);
         foro.getForo().get(numSubforo).notificar();
         System.out.println("Entrada " + "'" + nuevaEntrada.getTitulo() + "'" + " añadida correctamente al subforo: " + foro.getForo().get(numSubforo).getTitulo());
-        return nuevaEntrada;
     }
     public Encuesta crearEncuesta(String titulo, String contenido, String r1, String r2, String r3, int numSubforo){
         Encuesta e = new Encuesta(titulo, contenido, r1,r2,r3);
-        añadirSubforo(e, numSubforo);
+        aniadirASubforo(e, numSubforo);
         return e;
     }
     public TextoPlano crearTextoPlano(String titulo, String contenido, int numSubforo){
         TextoPlano e = new TextoPlano(titulo,contenido);
-        añadirSubforo(e, numSubforo);
+        aniadirASubforo(e, numSubforo);
         return e;
     }
     public Ejercicio crearEjercicio (String titulo, String enunciado, int numSubforo){
         Ejercicio e = new Ejercicio(titulo,enunciado);
-        añadirSubforo(e, numSubforo);
+        aniadirASubforo(e, numSubforo);
         return e;
     }
     public TipoMixto CrearTipoMixto(String titulo, String contenido, String r1, String r2, String r3, int numSubforo){
         TipoMixto e = new TipoMixto(titulo,contenido,r1,r2,r3);
-        añadirSubforo(e, numSubforo);
+        aniadirASubforo(e, numSubforo);
         return e;
     }
-            
+
     public void comentarEntrada(Entrada entrada, String comentario){
         entrada.comentarEntrada(comentario);
         System.out.println("Comentario realizado en la entrada: " + entrada.getTitulo());
@@ -159,7 +156,7 @@ public class Sistema {
     public void mostrarEntradaSinLog(Subforo f){
         Entrada e = f.EntradaMasVotada();
         mostrarEntrada (e);
-        }
+    }
     public void mostrarEntrada(Entrada entrada){
         System.out.println("Mostrando entrada:");
         System.out.println("Titulo: " + entrada.getTitulo() + ". Contenido: " + entrada.getContenido() + ". Puntuacion: " + entrada.getPuntuacion());

@@ -1,4 +1,3 @@
-package practicamp2;
 public class Demostrador {
     public static void main(String[] args) {
         Sistema sistema = new Sistema();
@@ -6,7 +5,6 @@ public class Demostrador {
         sistema.registrarUsuario("usr1", "Usuario", "Uno", "contra","usr1@urjc.es");
         if (sistema.hacerLogin("usr1", "contra")){
             if (!sistema.comprobarusuario("usr1")){
-                System.out.println("Login realizado correctamente");
                 Subforo subforo1 = sistema.iniciarSubforo("Subforo 1");
                 Subforo subforo2 = sistema.iniciarSubforo("Subforo 2");
                 
@@ -23,7 +21,6 @@ public class Demostrador {
                 sistema.hacerLogout();
                 sistema.mostrarEntradaSinLog(subforo2);
                 if (sistema.hacerLogin("usr1", "contra")){
-                    System.out.println("Login realizado correctamente");
                     sistema.comentarEntrada(entrada1, "Esto es un comentario para la entrada 1");
                     sistema.comentarEntrada(entrada1, "Esto es otro comentario para la entrada 1");
                     sistema.comentarEntrada(entrada2, "Esto es un comentario para la entrada 2");
