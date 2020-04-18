@@ -1,4 +1,3 @@
-package practicamp2;
 public class Demostrador {
     public static void main(String[] args) {
         Sistema sistema = new Sistema();
@@ -6,15 +5,14 @@ public class Demostrador {
         sistema.registrarUsuario("usr1", "Usuario", "Uno", "contra","usr1@urjc.es");
         if (sistema.hacerLogin("usr1", "contra")){
             if (!sistema.comprobarusuario("usr1")){
-                System.out.println("Login realizado correctamente");
                 Subforo subforo1 = sistema.iniciarSubforo("Subforo 1");
                 Subforo subforo2 = sistema.iniciarSubforo("Subforo 2");
                 
                 //sistema.subscribirse(usuario1, 0)
                 
-                Entrada entrada1 = sistema.iniciarEntrada("Entrada 1", "Contenido de la entrada 1", 0, 2, "", "", "");
-                Entrada entrada2 = sistema.iniciarEntrada("Entrada 2", "Contenido de la entrada 2", 1, 2, "", "", "");
-                Entrada entrada3 = sistema.iniciarEntrada("Pregunta Seria", "Los usuarios deben intentar aprobar?", 0, 4, "Sí", "No", "");
+                TextoPlano entrada1 = sistema.crearTextoPlano("Entrada 1", "Contenido de la entrada 1", 0);
+                TextoPlano entrada2 = sistema.crearTextoPlano("Entrada 2", "Contenido de la entrada 2", 1);
+                Encuesta entrada3 = sistema.crearEncuesta("Pregunta Seria", "Los usuarios deben intentar aprobar?", "Sí", "No", "", 0);
                 
                 //sistema.verNotificaciones(usuario1)
                 
@@ -23,7 +21,6 @@ public class Demostrador {
                 sistema.hacerLogout();
                 sistema.mostrarEntradaSinLog(subforo2);
                 if (sistema.hacerLogin("usr1", "contra")){
-                    System.out.println("Login realizado correctamente");
                     sistema.comentarEntrada(entrada1, "Esto es un comentario para la entrada 1");
                     sistema.comentarEntrada(entrada1, "Esto es otro comentario para la entrada 1");
                     sistema.comentarEntrada(entrada2, "Esto es un comentario para la entrada 2");
