@@ -12,9 +12,9 @@ public class Demostrador {
                 
                 //sistema.subscribirse(usuario1, 0)
                 
-                Entrada entrada1 = sistema.iniciarEntrada("Entrada 1", "Contenido de la entrada 1", 0, 2, "", "", "");
-                Entrada entrada2 = sistema.iniciarEntrada("Entrada 2", "Contenido de la entrada 2", 1, 2, "", "", "");
-                Entrada entrada3 = sistema.iniciarEntrada("Pregunta Seria", "Los usuarios deben intentar aprobar?", 0, 4, "Sí", "No", "");
+                TextoPlano entrada1 = sistema.crearTextoPlano("Entrada 1", "Contenido de la entrada 1", 0);
+                TextoPlano entrada2 = sistema.crearTextoPlano("Entrada 2", "Contenido de la entrada 2", 1);
+                Encuesta entrada3 = sistema.crearEncuesta("Pregunta Seria", "Los usuarios deben intentar aprobar?", "Sí", "No", "", 0);
                 
                 //sistema.verNotificaciones(usuario1)
                 

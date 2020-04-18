@@ -105,14 +105,33 @@ public class Sistema {
         subforo.aniadirSubscriptor(usuario);
     }
 
-    public Entrada iniciarEntrada(String titulo, String contenido, int numSubforo, int TipoEntrada, String r1, String r2, String r3) {
-        Entrada nuevaEntrada = new Entrada(titulo, contenido, TipoEntrada, r1, r2, r3);
+    public Entrada añadirSubforo(Entrada nuevaEntrada, int numSubforo) {
         foro.getForo().get(numSubforo).aniadirEntrada(nuevaEntrada);
         foro.getForo().get(numSubforo).notificar();
         System.out.println("Entrada " + "'" + nuevaEntrada.getTitulo() + "'" + " añadida correctamente al subforo: " + foro.getForo().get(numSubforo).getTitulo());
         return nuevaEntrada;
     }
-
+    public Encuesta crearEncuesta(String titulo, String contenido, String r1, String r2, String r3, int numSubforo){
+        Encuesta e = new Encuesta(titulo, contenido, r1,r2,r3);
+        añadirSubforo(e, numSubforo);
+        return e;
+    }
+    public TextoPlano crearTextoPlano(String titulo, String contenido, int numSubforo){
+        TextoPlano e = new TextoPlano(titulo,contenido);
+        añadirSubforo(e, numSubforo);
+        return e;
+    }
+    public Ejercicio crearEjercicio (String titulo, String enunciado, int numSubforo){
+        Ejercicio e = new Ejercicio(titulo,enunciado);
+        añadirSubforo(e, numSubforo);
+        return e;
+    }
+    public TipoMixto CrearTipoMixto(String titulo, String contenido, String r1, String r2, String r3, int numSubforo){
+        TipoMixto e = new TipoMixto(titulo,contenido,r1,r2,r3);
+        añadirSubforo(e, numSubforo);
+        return e;
+    }
+            
     public void comentarEntrada(Entrada entrada, String comentario){
         entrada.comentarEntrada(comentario);
         System.out.println("Comentario realizado en la entrada: " + entrada.getTitulo());
