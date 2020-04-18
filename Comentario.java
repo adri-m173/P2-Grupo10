@@ -1,3 +1,4 @@
+package practicamp2;
 public class Comentario {
     private String comentario;
     private int puntuacion;

@@ -1,4 +1,5 @@
-public class PracticaForo {
+package practicamp2;
+public class Demostrador {
     public static void main(String[] args) {
         Sistema sistema = new Sistema();
         //usuario1 = sistema.registrarUsuario(...)
@@ -11,20 +12,26 @@ public class PracticaForo {
                 
                 //sistema.subscribirse(usuario1, 0)
                 
-                Entrada entrada1 = sistema.iniciarEntrada("Entrada 1", "Contenido de la entrada 1", 0);
-                Entrada entrada2 = sistema.iniciarEntrada("Entrada 2", "Contenido de la entrada 2", 1);
+                Entrada entrada1 = sistema.iniciarEntrada("Entrada 1", "Contenido de la entrada 1", 0, 2, "", "", "");
+                Entrada entrada2 = sistema.iniciarEntrada("Entrada 2", "Contenido de la entrada 2", 1, 2, "", "", "");
+                Entrada entrada3 = sistema.iniciarEntrada("Pregunta Seria", "Los usuarios deben intentar aprobar?", 0, 4, "Sí", "No", "");
                 
                 //sistema.verNotificaciones(usuario1)
                 
                 sistema.votarEntradaPositivamente(entrada1);
                 sistema.votarEntradaNegativamente(entrada2);
-                sistema.comentarEntrada(entrada1, "Esto es un comentario para la entrada 1");
-                sistema.comentarEntrada(entrada1, "Esto es otro comentario para la entrada 1");
-                sistema.comentarEntrada(entrada2, "Esto es un comentario para la entrada 2");
-                sistema.votarComentarioPositivamente(entrada1, 0);
-                sistema.votarComentarioNegativamente(entrada2, 0);
-                sistema.mostrarEntrada(entrada1);
-                sistema.mostrarComentarios(entrada1);
+                sistema.hacerLogout();
+                sistema.mostrarEntradaSinLog(subforo2);
+                if (sistema.hacerLogin("usr1", "contra")){
+                    System.out.println("Login realizado correctamente");
+                    sistema.comentarEntrada(entrada1, "Esto es un comentario para la entrada 1");
+                    sistema.comentarEntrada(entrada1, "Esto es otro comentario para la entrada 1");
+                    sistema.comentarEntrada(entrada2, "Esto es un comentario para la entrada 2");
+                    sistema.votarComentarioPositivamente(entrada1, 0);
+                    sistema.votarComentarioNegativamente(entrada2, 0);
+                    sistema.mostrarEntrada(entrada1);
+                    sistema.mostrarComentarios(entrada1);
+                }
             }
             else{
                 System.out.println("El usuario ha sido baneado");

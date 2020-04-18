@@ -1,7 +1,9 @@
+package practicamp2;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Sistema {
+    private boolean sesionIniciada;
     private ArrayList<Usuario> usuarios = new ArrayList<>();
     private Foro foro = new Foro();
 
@@ -49,22 +51,27 @@ public class Sistema {
     }
 
     public boolean hacerLogin(String nick_, String pass_) {
-        boolean salida = false;
+        sesionIniciada = false;
         if (usuarios == null || usuarios.size() <= 0) {
             System.out.println("No existen usuarios registrados");
-            salida = false;
+            sesionIniciada = false;
         }
         for (Usuario usr : usuarios) {
             if (usr.getNick().equals(nick_) && usr.getPass().equals(pass_)) {
-                salida = true;
+                sesionIniciada = true;
                 System.out.println("Bienvenido, " + usr.getNombre() + " " + usr.getApellidos());
             } else {
-                salida = false;
+                sesionIniciada = false;
             }
         }
-        return salida;
+        return sesionIniciada;
     }
-
+    public void hacerLogout (){
+        sesionIniciada = false;
+            if (!sesionIniciada){
+                System.out.println("Sesión Cerrada Correctamente");
+            }
+    }
     public boolean comprobarusuario(String nick){
         int j;
         boolean salida;
@@ -98,8 +105,8 @@ public class Sistema {
         subforo.aniadirSubscriptor(usuario);
     }
 
-    public Entrada iniciarEntrada(String titulo, String contenido, int numSubforo) {
-        Entrada nuevaEntrada = new Entrada(titulo, contenido);
+    public Entrada iniciarEntrada(String titulo, String contenido, int numSubforo, int TipoEntrada, String r1, String r2, String r3) {
+        Entrada nuevaEntrada = new Entrada(titulo, contenido, TipoEntrada, r1, r2, r3);
         foro.getForo().get(numSubforo).aniadirEntrada(nuevaEntrada);
         foro.getForo().get(numSubforo).notificar();
         System.out.println("Entrada " + "'" + nuevaEntrada.getTitulo() + "'" + " añadida correctamente al subforo: " + foro.getForo().get(numSubforo).getTitulo());
@@ -130,19 +137,20 @@ public class Sistema {
         entrada.getComentarios().get(numeroComent).votarNegativamente();
         System.out.println("Has votado negativamente el comentario " + numeroComent + " de la entrada: " + entrada.getTitulo());
     }
-
+    public void mostrarEntradaSinLog(Subforo f){
+        Entrada e = f.EntradaMasVotada();
+        mostrarEntrada (e);
+        }
     public void mostrarEntrada(Entrada entrada){
         System.out.println("Mostrando entrada:");
         System.out.println("Titulo: " + entrada.getTitulo() + ". Contenido: " + entrada.getContenido() + ". Puntuacion: " + entrada.getPuntuacion());
     }
-
     public void mostrarComentarios(Entrada entrada){
         System.out.println("Los comentarios de la entrada: " + entrada.getTitulo() + " son: ");
         for (int i = 0; i <= entrada.getComentarios().size(); i++) {
             System.out.println(i+1 + ": " + entrada.getComentarios().get(i).getComentario() + " / Puntuacion: " + entrada.getComentarios().get(i).getPuntuacion());
         }
     }
-
     public void mostrarNotificaciones(Usuario usuario){
         usuario.verNotificaciones();
     }
