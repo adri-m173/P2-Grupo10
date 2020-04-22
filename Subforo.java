@@ -1,4 +1,3 @@
-package practicamp2;
 import java.util.ArrayList;
 
 public class Subforo {
@@ -34,10 +33,12 @@ public class Subforo {
 
     public void aniadirSubscriptor(Usuario subs){
         usuariosSubscritos.add(subs);
+        System.out.println("El usuario " + subs.getNick() + " se ha dado de alta en el subforo " + getTitulo());
     }
 
     public void eliminarSubscriptor(Usuario subs){
         usuariosSubscritos.remove(subs);
+        System.out.println("El usuario " + subs.getNick() + " se ha dado de baja en el subforo " + getTitulo());
     }
 
     public void notificar(){

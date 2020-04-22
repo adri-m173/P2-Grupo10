@@ -1,4 +1,3 @@
-package practicamp2;
 import java.util.ArrayList;
 
 public class Foro {
@@ -6,6 +5,7 @@ public class Foro {
 
     public void aniadirSubforo(Subforo subforo_) {
         foro.add(subforo_);
+        System.out.println("Subforo " + "'" + subforo_.getTitulo() + "'" + " creado correctamente");
     }
 
     public ArrayList<Subforo> getForo() {

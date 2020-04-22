@@ -1,9 +1,5 @@
-package practicamp2;
-
 public class Ejercicio extends Entrada {
-    
-    public Ejercicio(String titulo, String enunciado) {
-        super(titulo, enunciado);
+    public Ejercicio(Usuario autor_, String titulo, String enunciado) {
+        super(autor_, titulo, enunciado);
     }
-    
 }
