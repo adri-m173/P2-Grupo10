@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Sistema {
-    private boolean sesionIniciada;
+    private boolean sesionIniciada = false;
     private ArrayList<Usuario> usuarios = new ArrayList<>();
     private Foro foro = new Foro();
 
@@ -19,7 +19,23 @@ public class Sistema {
         return salida;
     }
 
-    public void registrarUsuario(String nick_, String nombre_, String apellidos_, String pass_, String email_) {
+    private void aniadirASubforo(Entrada nuevaEntrada, int numSubforo) {
+        foro.getForo().get(numSubforo).aniadirEntrada(nuevaEntrada);
+        foro.getForo().get(numSubforo).notificar();
+        System.out.println("Entrada " + "'" + nuevaEntrada.getTitulo() + "'" + " añadida correctamente al subforo: " + foro.getForo().get(numSubforo).getTitulo());
+    }
+
+    private boolean comprobarLogin() {
+        boolean salida = false;
+        if (sesionIniciada) {
+            salida = true;
+        } else {
+            System.out.println("Error. Solo los usuarios registrados estan autorizados a hacer esta operacion");
+        }
+        return salida;
+    }
+
+    public Usuario registrarUsuario(String nick_, String nombre_, String apellidos_, String pass_, String email_) {
         while (!estaDisponible(email_, nick_)) {
             System.out.println("Error. El email o nick utilizado ya esta en uso");
         }
@@ -43,6 +59,7 @@ public class Sistema {
             System.out.println("El correo introducido no es valido");
         }
         sc.close();
+        return nuevoUsuario;
     }
 
     public ArrayList<Usuario> getUsuarios() {
@@ -50,19 +67,19 @@ public class Sistema {
     }
 
     public boolean hacerLogin(String nick_, String pass_) {
-        sesionIniciada = false;
         if (usuarios == null || usuarios.size() <= 0) {
             System.out.println("No existen usuarios registrados");
-            sesionIniciada = false;
         }
         for (Usuario usr : usuarios) {
             if (usr.getNick().equals(nick_) && usr.getPass().equals(pass_)) {
                 sesionIniciada = true;
                 System.out.println("Login realizado correctamente");
                 System.out.println("Bienvenido, " + usr.getNombre() + " " + usr.getApellidos());
-            } else {
-                sesionIniciada = false;
+                break;
             }
+        }
+        if (!sesionIniciada) {
+            System.out.println("Error al hacer login");
         }
         return sesionIniciada;
     }
@@ -70,13 +87,12 @@ public class Sistema {
         sesionIniciada = false;
         System.out.println("Sesión Cerrada Correctamente");
     }
+
     public boolean comprobarusuario(String nick){
-        int j;
-        boolean salida;
-        salida = false;
+        boolean salida = false;
         int i = 0;
         boolean encontrado=false;
-        for (j=0;j<=usuarios.size();j++){
+        for (int j=0;j<=usuarios.size();j++){
             if(!encontrado){
                 Usuario u = usuarios.get(i);
                 encontrado = u.comprobarnick(nick, u);
@@ -88,86 +104,135 @@ public class Sistema {
             Usuario u = usuarios.get(i);
             salida = u.comprobarbaneo(u);
         }
+        if (salida) {
+            System.out.println("El usuario esta bandeado");
+        }
         return salida;
     }
 
     public Subforo iniciarSubforo(String titulo) {
-        Subforo nuevoSubforo = new Subforo(titulo);
-        foro.aniadirSubforo(nuevoSubforo);
-        System.out.println("Subforo " + "'" + nuevoSubforo.getTitulo() + "'" + " creado correctamente");
-        return nuevoSubforo;
+        Subforo salida = null;
+        if (comprobarLogin()) {
+            Subforo nuevoSubforo = new Subforo(titulo);
+            foro.aniadirSubforo(nuevoSubforo);
+            salida = nuevoSubforo;
+        }
+        return salida;
     }
 
     public void subscribirse(Usuario usuario, int numSubforo){
-        Subforo subforo = foro.getForo().get(numSubforo);
-        subforo.aniadirSubscriptor(usuario);
-    }
-
-    public void aniadirASubforo(Entrada nuevaEntrada, int numSubforo) {
-        foro.getForo().get(numSubforo).aniadirEntrada(nuevaEntrada);
-        foro.getForo().get(numSubforo).notificar();
-        System.out.println("Entrada " + "'" + nuevaEntrada.getTitulo() + "'" + " añadida correctamente al subforo: " + foro.getForo().get(numSubforo).getTitulo());
-    }
-    public Encuesta crearEncuesta(String titulo, String contenido, String r1, String r2, String r3, int numSubforo){
-        Encuesta e = new Encuesta(titulo, contenido, r1,r2,r3);
-        aniadirASubforo(e, numSubforo);
-        return e;
-    }
-    public TextoPlano crearTextoPlano(String titulo, String contenido, int numSubforo){
-        TextoPlano e = new TextoPlano(titulo,contenido);
-        aniadirASubforo(e, numSubforo);
-        return e;
-    }
-    public Ejercicio crearEjercicio (String titulo, String enunciado, int numSubforo){
-        Ejercicio e = new Ejercicio(titulo,enunciado);
-        aniadirASubforo(e, numSubforo);
-        return e;
-    }
-    public TipoMixto CrearTipoMixto(String titulo, String contenido, String r1, String r2, String r3, int numSubforo){
-        TipoMixto e = new TipoMixto(titulo,contenido,r1,r2,r3);
-        aniadirASubforo(e, numSubforo);
-        return e;
-    }
-
-    public void comentarEntrada(Entrada entrada, String comentario){
-        entrada.comentarEntrada(comentario);
-        System.out.println("Comentario realizado en la entrada: " + entrada.getTitulo());
-    }
-
-    public void votarEntradaPositivamente(Entrada entrada){
-        entrada.votarPositivamente();
-        System.out.println("Has votado positivamente la entrada: " + entrada.getTitulo());
-    }
-
-    public void votarEntradaNegativamente(Entrada entrada) {
-        entrada.votarNegativamente();
-        System.out.println("Has votado negativamente la entrada: " + entrada.getTitulo());
-    }
-
-    public void votarComentarioPositivamente(Entrada entrada, int numeroComent) {
-        entrada.getComentarios().get(numeroComent).votarPositivamente();
-        System.out.println("Has votado positivamente el comentario " + numeroComent + " de la entrada: " + entrada.getTitulo());
-    }
-
-    public void votarComentarioNegativamente(Entrada entrada, int numeroComent) {
-        entrada.getComentarios().get(numeroComent).votarNegativamente();
-        System.out.println("Has votado negativamente el comentario " + numeroComent + " de la entrada: " + entrada.getTitulo());
-    }
-    public void mostrarEntradaSinLog(Subforo f){
-        Entrada e = f.EntradaMasVotada();
-        mostrarEntrada (e);
-    }
-    public void mostrarEntrada(Entrada entrada){
-        System.out.println("Mostrando entrada:");
-        System.out.println("Titulo: " + entrada.getTitulo() + ". Contenido: " + entrada.getContenido() + ". Puntuacion: " + entrada.getPuntuacion());
-    }
-    public void mostrarComentarios(Entrada entrada){
-        System.out.println("Los comentarios de la entrada: " + entrada.getTitulo() + " son: ");
-        for (int i = 0; i <= entrada.getComentarios().size(); i++) {
-            System.out.println(i+1 + ": " + entrada.getComentarios().get(i).getComentario() + " / Puntuacion: " + entrada.getComentarios().get(i).getPuntuacion());
+        if (comprobarLogin()) {
+            Subforo subforo = foro.getForo().get(numSubforo);
+            subforo.aniadirSubscriptor(usuario);
         }
     }
+
+    public void darseBaja(Usuario usuario, int numSubforo) {
+        if (comprobarLogin()) {
+            Subforo subforo = foro.getForo().get(numSubforo);
+            subforo.eliminarSubscriptor(usuario);
+        }
+    }
+
+    public Encuesta crearEncuesta(Usuario autor, String titulo, String contenido, String r1, String r2, String r3, int numSubforo){
+        Encuesta salida = null;
+        if (comprobarLogin()){
+            Encuesta e = new Encuesta(autor, titulo, contenido, r1,r2,r3);
+            aniadirASubforo(e, numSubforo);
+            salida = e;
+        }
+        return salida;
+    }
+
+    public TextoPlano crearTextoPlano(Usuario autor, String titulo, String contenido, int numSubforo){
+        TextoPlano salida = null;
+        if (comprobarLogin()) {
+            TextoPlano e = new TextoPlano(autor, titulo,contenido);
+            aniadirASubforo(e, numSubforo);
+            salida = e;
+        }
+        return salida;
+    }
+
+    public Ejercicio crearEjercicio (Usuario autor, String titulo, String enunciado, int numSubforo){
+        Ejercicio salida = null;
+        if (comprobarLogin()) {
+            Ejercicio e = new Ejercicio(autor, titulo,enunciado);
+            aniadirASubforo(e, numSubforo);
+            salida = e;
+        }
+        return salida;
+    }
+
+    public TipoMixto CrearTipoMixto(Usuario autor, String titulo, String contenido, String r1, String r2, String r3, int numSubforo){
+        TipoMixto salida = null;
+        if (comprobarLogin()) {
+            TipoMixto e = new TipoMixto(autor, titulo,contenido,r1,r2,r3);
+            aniadirASubforo(e, numSubforo);
+            salida = e;
+        }
+        return salida;
+    }
+
+    public void comentarEntrada(Entrada entrada, Usuario autor, String comentario){
+        if (comprobarLogin()) {
+            entrada.comentarEntrada(autor, comentario);
+        }
+    }
+
+    public void votarEntradaPositivamente(Entrada entrada, Usuario usuario){
+        if (comprobarLogin()) {
+            entrada.votarPositivamente(usuario);
+        }
+    }
+
+    public void votarEntradaNegativamente(Entrada entrada, Usuario usuario) {
+        if (comprobarLogin()) {
+            entrada.votarNegativamente(usuario);
+        }
+    }
+
+    public void votarComentarioPositivamente(Entrada entrada, Usuario usuario, int numeroComent) {
+        if (comprobarLogin()) {
+            if (entrada.getComentarios().get(numeroComent).votarPositivamente(usuario)) {
+                System.out.println("Has votado positivamente el comentario " + numeroComent + " de la entrada: " + entrada.getTitulo());
+            }
+        }
+    }
+
+    public void votarComentarioNegativamente(Entrada entrada, Usuario usuario, int numeroComent) {
+        if (comprobarLogin()) {
+            if (entrada.getComentarios().get(numeroComent).votarNegativamente(usuario)) {
+                System.out.println("Has votado negativamente el comentario " + numeroComent + " de la entrada: " + entrada.getTitulo());
+            }
+        }
+    }
+
+    public void mostrarEntradaSinLog(Subforo f){
+        Entrada e = f.EntradaMasVotada();
+        System.out.println("La entrada mas votada es:");
+        System.out.println("Titulo: " + e.getTitulo() + ". Contenido: " + e.getContenido() + ". Puntuacion: " + e.getPuntuacion());
+    }
+
+    public void mostrarEntrada(Entrada entrada){
+        if (comprobarLogin()) {
+            System.out.println("Mostrando entrada:");
+            System.out.println("Titulo: " + entrada.getTitulo() + ". Contenido: " + entrada.getContenido() + ". Puntuacion: " + entrada.getPuntuacion());
+        }
+    }
+
+    public void mostrarComentarios(Entrada entrada){
+        if (comprobarLogin()) {
+            System.out.println("Los comentarios de la entrada: " + entrada.getTitulo() + " son: ");
+            for (int i = 0; i <= entrada.getComentarios().size(); i++) {
+                System.out.println(i+1 + ": " + entrada.getComentarios().get(i).getComentario() + " / Puntuacion: " + entrada.getComentarios().get(i).getPuntuacion());
+            }
+        }
+    }
+
     public void mostrarNotificaciones(Usuario usuario){
-        usuario.verNotificaciones();
+        if (comprobarLogin()) {
+            usuario.verNotificaciones();
+        }
     }
 }

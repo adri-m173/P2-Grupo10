@@ -1,9 +1,10 @@
-package practicamp2;
 public class Comentario {
-    private String comentario;
+    private final String comentario;
+    private final Usuario autor;
     private int puntuacion;
 
-    public Comentario(String comentario_) {
+    public Comentario(Usuario autor_, String comentario_) {
+        this.autor = autor_;
         this.comentario = comentario_;
     }
 
@@ -15,11 +16,25 @@ public class Comentario {
         return puntuacion;
     }
 
-    public void votarPositivamente() {
-        this.puntuacion = puntuacion+1;
+    public boolean votarPositivamente(Usuario usuario) {
+        boolean salida = false;
+        if (usuario.getNick().equals(autor.getNick())) {
+            System.out.println("Error. No puedes votar tu propio comentario");
+        } else {
+            this.puntuacion = puntuacion+1;
+            salida = true;
+        }
+        return salida;
     }
 
-    public void votarNegativamente() {
-        this.puntuacion = puntuacion-1;
+    public boolean votarNegativamente(Usuario usuario) {
+        boolean salida = false;
+        if (usuario.getNick().equals(autor.getNick())) {
+            System.out.println("Error. No puedes votar tu propio comentario");
+        } else {
+            this.puntuacion = puntuacion-1;
+            salida = true;
+        }
+        return salida;
     }
 }
