@@ -1,4 +1,7 @@
-public class Comentario {
+import java.io.Serializable;
+
+public class Comentario implements Serializable {
+    private static final long serialVersionUID = 1L;
     private final String comentario;
     private final Usuario autor;
     private int puntuacion;

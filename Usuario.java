@@ -1,11 +1,13 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Usuario {
-    private String nick;
-    private String nombre;
-    private String apellidos;
-    private String pass;
-    private String email;
+public class Usuario implements Serializable {
+    private static final long serialVersionUID = 1L;
+    private final String nick;
+    private final String nombre;
+    private final String apellidos;
+    private final String pass;
+    private final String email;
     private boolean baneado;
     private ArrayList<String> notificaciones;
 
@@ -21,11 +23,11 @@ public class Usuario {
     public void recibirNotificacion(String noti){
         notificaciones.add(noti);
     }
-    
+
     public void verNotificaciones(){
         System.out.println("Tienes las siguientes notificaciones: " + notificaciones.toString());
     }
-    
+
 
     public String getNick() {
         return nick;
@@ -56,7 +58,7 @@ public class Usuario {
     }
 
     public boolean comprobarnick(String nick, Usuario u) {
-        return nick==u.nick;
+        return nick.equals(u.nick);
     }
 
     public boolean comprobarbaneo(Usuario u) {

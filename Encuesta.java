@@ -1,4 +1,7 @@
-public class Encuesta extends Entrada{
+import java.io.Serializable;
+
+public class Encuesta extends Entrada implements Serializable {
+    private static final long serialVersionUID = 1L;
     String Respuesta1;
     String Respuesta2;
     String Respuesta3;

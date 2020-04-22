@@ -1,6 +1,11 @@
-public class Demostrador {
+import java.io.Serializable;
+
+public class Demostrador implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     public static void main(String[] args) {
         Sistema sistema = new Sistema();
+        sistema.cargarSistema();
         Usuario usuario1 = sistema.registrarUsuario("usr1", "Usuario", "Uno", "contra","usr1@urjc.es");
         Usuario usuario2 = sistema.registrarUsuario("usr2", "Usuario", "Dos", "contra", "usr2@alumnos.urjc.es");
         if (sistema.hacerLogin("usr1", "contra")){
@@ -37,6 +42,9 @@ public class Demostrador {
                     }
                 }
             }
+        }
+        if (sistema.guardarSistema()){
+            System.out.println("Sistema guardado correctamente");
         }
     }
 }

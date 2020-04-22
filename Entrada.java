@@ -1,6 +1,8 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Entrada {
+public class Entrada implements Serializable {
+    private static final long serialVersionUID = 1L;
     private final String titulo;
     private final String contenido;
     private final Usuario autor;

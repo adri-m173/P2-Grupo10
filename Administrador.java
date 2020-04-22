@@ -1,4 +1,7 @@
-public class Administrador extends Usuario {
+import java.io.Serializable;
+
+public class Administrador extends Usuario implements Serializable {
+    private static final long serialVersionUID = 1L;
     
     public Administrador(String nick_, String n_, String a_, String p_, String e_) {
         super(nick_, n_, a_, p_, e_);

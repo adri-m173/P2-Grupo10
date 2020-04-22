@@ -1,10 +1,56 @@
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Sistema {
+public class Sistema implements Serializable {
+    private static final long serialVersionUID = 1L;
     private boolean sesionIniciada = false;
     private ArrayList<Usuario> usuarios = new ArrayList<>();
-    private Foro foro = new Foro();
+    private ArrayList<Subforo> foro = new ArrayList<>();
+
+    private void aniadirSubforoEnForo(Subforo subforo_) {
+        foro.add(subforo_);
+    }
+
+    private ArrayList<Subforo> getForo() {
+        return foro;
+    }
+
+    public boolean guardarSistema(){
+        try {
+            FileOutputStream f = new FileOutputStream("BaseDeDatos.obj");
+            ObjectOutputStream finalFile = new ObjectOutputStream(f);
+            finalFile.writeObject(this);
+            finalFile.close();
+            f.close();
+            return true;
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
+    public Sistema cargarSistema(){
+        Sistema s = null;
+        try {
+            FileInputStream file =new FileInputStream("BaseDeDatos.obj");
+            ObjectInputStream inputFile = new ObjectInputStream(file);
+            s = (Sistema) inputFile.readObject();
+
+            inputFile.close();
+            file.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+        return s;
+    }
 
     private boolean estaDisponible(String email, String nick) {
         boolean salida = true;
@@ -20,9 +66,9 @@ public class Sistema {
     }
 
     private void aniadirASubforo(Entrada nuevaEntrada, int numSubforo) {
-        foro.getForo().get(numSubforo).aniadirEntrada(nuevaEntrada);
-        foro.getForo().get(numSubforo).notificar();
-        System.out.println("Entrada " + "'" + nuevaEntrada.getTitulo() + "'" + " añadida correctamente al subforo: " + foro.getForo().get(numSubforo).getTitulo());
+        getForo().get(numSubforo).aniadirEntrada(nuevaEntrada);
+        getForo().get(numSubforo).notificar();
+        System.out.println("Entrada " + "'" + nuevaEntrada.getTitulo() + "'" + " añadida correctamente al subforo: " + getForo().get(numSubforo).getTitulo());
     }
 
     private boolean comprobarLogin() {
@@ -114,7 +160,7 @@ public class Sistema {
         Subforo salida = null;
         if (comprobarLogin()) {
             Subforo nuevoSubforo = new Subforo(titulo);
-            foro.aniadirSubforo(nuevoSubforo);
+            aniadirSubforoEnForo(nuevoSubforo);
             salida = nuevoSubforo;
         }
         return salida;
@@ -122,14 +168,14 @@ public class Sistema {
 
     public void subscribirse(Usuario usuario, int numSubforo){
         if (comprobarLogin()) {
-            Subforo subforo = foro.getForo().get(numSubforo);
+            Subforo subforo = getForo().get(numSubforo);
             subforo.aniadirSubscriptor(usuario);
         }
     }
 
     public void darseBaja(Usuario usuario, int numSubforo) {
         if (comprobarLogin()) {
-            Subforo subforo = foro.getForo().get(numSubforo);
+            Subforo subforo = getForo().get(numSubforo);
             subforo.eliminarSubscriptor(usuario);
         }
     }
@@ -224,7 +270,7 @@ public class Sistema {
     public void mostrarComentarios(Entrada entrada){
         if (comprobarLogin()) {
             System.out.println("Los comentarios de la entrada: " + entrada.getTitulo() + " son: ");
-            for (int i = 0; i <= entrada.getComentarios().size(); i++) {
+            for (int i = 0; i <= entrada.getComentarios().size()-1; i++) {
                 System.out.println(i+1 + ": " + entrada.getComentarios().get(i).getComentario() + " / Puntuacion: " + entrada.getComentarios().get(i).getPuntuacion());
             }
         }

@@ -1,12 +1,14 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Subforo {
-    private String titulo;
+public class Subforo implements Serializable {
+    private static final long serialVersionUID = 1L;
+    private final String titulo;
     private ArrayList <Entrada> entradas = new ArrayList<>();
     private ArrayList <Usuario> usuariosSubscritos = new ArrayList<>();
 
     public Subforo(String titulo_){
-        this.titulo=titulo_;
+        this.titulo = titulo_;
     }
 
     public String getTitulo() {
