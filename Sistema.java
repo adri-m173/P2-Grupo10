@@ -42,7 +42,7 @@ public class Sistema implements Serializable {
             FileInputStream file =new FileInputStream("BaseDeDatos.obj");
             ObjectInputStream inputFile = new ObjectInputStream(file);
             s = (Sistema) inputFile.readObject();
-
+            
             inputFile.close();
             file.close();
         } catch (Exception e) {
@@ -82,30 +82,33 @@ public class Sistema implements Serializable {
     }
 
     public Usuario registrarUsuario(String nick_, String nombre_, String apellidos_, String pass_, String email_) {
-        while (!estaDisponible(email_, nick_)) {
+        if (!estaDisponible(email_, nick_)) {
             System.out.println("Error. El email o nick utilizado ya esta en uso");
+            return null;
         }
-        Usuario nuevoUsuario = new Usuario(nick_, nombre_, apellidos_, pass_, email_);
-        Scanner sc = new Scanner(email_);
-        sc.useDelimiter("@");
-        sc.next();
-        String s = sc.next();
-        System.out.println(s);
-        String s1 = "urjc.es";
-        String s2 = "alumnos.urjc.es";
-        if (s.equals(s1)) {
-            usuarios.add(nuevoUsuario);
-            System.out.println("Usuario como profesor creado correctamente");
+        else{
+            Usuario nuevoUsuario = new Usuario(nick_, nombre_, apellidos_, pass_, email_);
+            Scanner sc = new Scanner(email_);
+            sc.useDelimiter("@");
+            sc.next();
+            String s = sc.next();
+            System.out.println(s);
+            String s1 = "urjc.es";
+            String s2 = "alumnos.urjc.es";
+            if (s.equals(s1)) {
+                usuarios.add(nuevoUsuario);
+                System.out.println("Usuario como profesor creado correctamente");
+            }
+            else if (s.equals(s2)) {
+                usuarios.add(nuevoUsuario);
+                System.out.println("Usuario como alumno creado correctamente");
+            }
+            else {
+                System.out.println("El correo introducido no es valido");
+            }
+            sc.close();
+            return nuevoUsuario;
         }
-        else if (s.equals(s2)) {
-            usuarios.add(nuevoUsuario);
-            System.out.println("Usuario como alumno creado correctamente");
-        }
-        else {
-            System.out.println("El correo introducido no es valido");
-        }
-        sc.close();
-        return nuevoUsuario;
     }
 
     public ArrayList<Usuario> getUsuarios() {
@@ -131,7 +134,7 @@ public class Sistema implements Serializable {
     }
     public void hacerLogout (){
         sesionIniciada = false;
-        System.out.println("Sesión Cerrada Correctamente");
+        System.out.println("Sesion Cerrada Correctamente");
     }
 
     public boolean comprobarusuario(String nick){

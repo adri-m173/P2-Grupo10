@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.Serializable;
 
 public class Demostrador implements Serializable {
@@ -5,7 +6,11 @@ public class Demostrador implements Serializable {
 
     public static void main(String[] args) {
         Sistema sistema = new Sistema();
-        sistema.cargarSistema();
+        File f = new File("BaseDeDatos.obj"); 
+        long filesize = f.length();
+        if (filesize > 0){
+            sistema = sistema.cargarSistema();
+        }
         Usuario usuario1 = sistema.registrarUsuario("usr1", "Usuario", "Uno", "contra","usr1@urjc.es");
         Usuario usuario2 = sistema.registrarUsuario("usr2", "Usuario", "Dos", "contra", "usr2@alumnos.urjc.es");
         if (sistema.hacerLogin("usr1", "contra")){
@@ -14,13 +19,15 @@ public class Demostrador implements Serializable {
                 Subforo subforo2 = sistema.iniciarSubforo("Subforo 2");
 
                 sistema.subscribirse(usuario1, 1);
-                sistema.darseBaja(usuario1, 1);
-
+                
                 TextoPlano entrada1 = sistema.crearTextoPlano(usuario1, "Entrada 1", "Contenido de la entrada 1", 0);
                 TextoPlano entrada2 = sistema.crearTextoPlano(usuario1, "Entrada 2", "Contenido de la entrada 2", 1);
 
-                //sistema.mostrarNotificaciones(usuario1);
-
+                sistema.mostrarNotificaciones(usuario1);
+                
+                sistema.darseBaja(usuario1, 1);
+                
+                
                 sistema.comentarEntrada(entrada1, usuario1, "Esto es un comentario para la entrada 1");
                 sistema.votarEntradaPositivamente(entrada1, usuario1);
                 sistema.hacerLogout();

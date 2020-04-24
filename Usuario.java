@@ -9,7 +9,7 @@ public class Usuario implements Serializable {
     private final String pass;
     private final String email;
     private boolean baneado;
-    private ArrayList<String> notificaciones;
+    private ArrayList<String> notificaciones = new ArrayList<>();
 
     public Usuario(String nick_, String n_, String a_, String p_, String e_){
         nick = nick_;
