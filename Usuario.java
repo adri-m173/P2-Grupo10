@@ -9,6 +9,7 @@ public class Usuario implements Serializable {
     private final String pass;
     private final String email;
     private boolean baneado;
+    private boolean esProfesorAlumno = false;
     private ArrayList<String> notificaciones = new ArrayList<>();
 
     public Usuario(String nick_, String n_, String a_, String p_, String e_){
@@ -28,6 +29,13 @@ public class Usuario implements Serializable {
         System.out.println("Tienes las siguientes notificaciones: " + notificaciones.toString());
     }
 
+    public void setProfesor(){
+        this.esProfesorAlumno = true;
+    }
+
+    public boolean getEsProfesorAlumno() {
+        return esProfesorAlumno;
+    }
 
     public String getNick() {
         return nick;

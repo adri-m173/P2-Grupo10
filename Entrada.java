@@ -7,6 +7,7 @@ public class Entrada implements Serializable {
     private final String contenido;
     private final Usuario autor;
     private int puntuacion;
+    private boolean esVisible = false;
     private ArrayList<Comentario> comentarios = new ArrayList<>();
 
     public Entrada(Usuario autor_, String titulo_,String contenido_){
@@ -39,6 +40,10 @@ public class Entrada implements Serializable {
         }
     }
 
+    public void hacerVisible() {
+        this.esVisible = true;
+    }
+
     public String getTitulo() {
         return titulo;
     }
@@ -49,6 +54,10 @@ public class Entrada implements Serializable {
 
     public int getPuntuacion() {
         return puntuacion;
+    }
+
+    public boolean getEsVisible() {
+        return esVisible;
     }
 
     public ArrayList<Comentario> getComentarios() {
