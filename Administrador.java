@@ -1,3 +1,5 @@
+package practicamp2;
+
 import java.io.Serializable;
 
 public class Administrador extends Usuario implements Serializable {

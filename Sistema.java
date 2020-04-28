@@ -1,3 +1,4 @@
+package practicamp2;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -9,11 +10,14 @@ public class Sistema implements Serializable {
     private boolean sesionIniciada = false;
     private ArrayList<Usuario> usuarios = new ArrayList<>();
     private ArrayList<Subforo> foro = new ArrayList<>();
+    private ArrayList<Entrada> EntradasParaRevisar = new ArrayList<>();
 
     private void aniadirSubforoEnForo(Subforo subforo_) {
         foro.add(subforo_);
     }
-
+    private void añadirAEntradasParaRevisar(Entrada e){
+        EntradasParaRevisar.add(e);
+    }
     private ArrayList<Subforo> getForo() {
         return foro;
     }
@@ -81,7 +85,9 @@ public class Sistema implements Serializable {
         }
         return salida;
     }
-
+    public void Mostrar(){
+        System.out.println(usuarios.toString());
+    }
     private void aniadirASubforo(Entrada nuevaEntrada, int numSubforo) {
         getForo().get(numSubforo).aniadirEntrada(nuevaEntrada);
         getForo().get(numSubforo).notificar();
@@ -142,7 +148,7 @@ public class Sistema implements Serializable {
                 System.out.println("Usuario como alumno creado correctamente");
             }
             else {
-                System.out.println("El correo introducido no es valido");
+                System.out.println("El correo introducido no es valido, por favor introduzca una cuenta de la Universidad");
             }
             sc.close();
             return nuevoUsuario;
@@ -194,7 +200,7 @@ public class Sistema implements Serializable {
             salida = u.comprobarbaneo(u);
         }
         if (salida) {
-            System.out.println("El usuario esta bandeado");
+            System.out.println("Tu usuario esta bandeado, por favor, regrese cuando se le levante el castigo");
         }
         return !salida;
     }
@@ -206,6 +212,7 @@ public class Sistema implements Serializable {
                 Subforo nuevoSubforo = new Subforo(titulo);
                 aniadirSubforoEnForo(nuevoSubforo);
                 salida = nuevoSubforo;
+                System.out.println("Subforo creado correctamente");
             } else {
                 System.out.println("Solo los profesores estan autorizados a crear un subforo");
             }
@@ -226,42 +233,63 @@ public class Sistema implements Serializable {
             subforo.eliminarSubscriptor(usuario);
         }
     }
-
-    public void verificarEntrada (Administrador admin, Entrada entrada) {
-        admin.verificarEntrada(entrada);
-    }
-
     public Encuesta crearEncuesta(Usuario autor, String titulo, String contenido, String r1, String r2, String r3, int numSubforo){
         Encuesta salida = null;
         if (comprobarLogin()){
             if (autor.getEsProfesorAlumno()) {
-                Encuesta e = new Encuesta(autor, titulo, contenido, r1,r2,r3);
-                aniadirASubforo(e, numSubforo);
+                Encuesta e = new Encuesta(autor, titulo, contenido, r1,r2,r3,numSubforo);
+                añadirAEntradasParaRevisar(e);
                 salida = e;
+                System.out.println("La entrada ha sido creada correctamente, debe ser revisada por el administrador");
             } else {
                 System.out.println("Error. Solo los profesores están autorizados a crear encuestas");
             }
         }
         return salida;
     }
-
+    
     public TextoPlano crearTextoPlano(Usuario autor, String titulo, String contenido, int numSubforo){
         TextoPlano salida = null;
         if (comprobarLogin()) {
-            TextoPlano e = new TextoPlano(autor, titulo,contenido);
-            aniadirASubforo(e, numSubforo);
+            TextoPlano e = new TextoPlano(autor, titulo,contenido, numSubforo);
+            añadirAEntradasParaRevisar(e);
             salida = e;
+            System.out.println("La entrada ha sido creada correctamente, debe ser revisada por el administrador");
+            
         }
         return salida;
     }
-
+    public void validarEntradas(Administrador a){
+        if (EntradasParaRevisar.isEmpty()){
+            System.out.println("No hay entradas para revisasr");
+        }
+        else{
+            Entrada e = EntradasParaRevisar.get(0);
+            a.verificarEntrada(e);
+            EntradasParaRevisar.remove(e);
+            aniadirASubforo(e,e.getNumSubforo());
+        }
+    }
+    public void vetarEntradas (Administrador a){
+        if (EntradasParaRevisar.isEmpty()){
+            System.out.println("No hay entradas para revisasr");
+        }
+        else{
+            Entrada e = EntradasParaRevisar.get(0);
+            EntradasParaRevisar.remove(e);
+            a.banear(e.getAutor());
+            System.out.println("Entrada denegada correctamente. El autor ha sido baneado");
+        }
+    }
     public Ejercicio crearEjercicio (Usuario autor, String titulo, String enunciado, int numSubforo){
         Ejercicio salida = null;
         if (comprobarLogin()) {
             if (autor.getEsProfesorAlumno()) {
-                Ejercicio e = new Ejercicio(autor, titulo,enunciado);
-                aniadirASubforo(e, numSubforo);
+                Ejercicio e = new Ejercicio(autor, titulo,enunciado,numSubforo);
+                añadirAEntradasParaRevisar(e);
                 salida = e;
+                System.out.println("La entrada ha sido creada correctamente, debe ser revisada por el administrador");
+            
             } else {
                 System.out.println("Error. Solo los profesores estan autorizados a crear ejercicios");
             }
@@ -272,9 +300,15 @@ public class Sistema implements Serializable {
     public TipoMixto CrearTipoMixto(Usuario autor, String titulo, String contenido, String r1, String r2, String r3, int numSubforo){
         TipoMixto salida = null;
         if (comprobarLogin()) {
-            TipoMixto e = new TipoMixto(autor, titulo,contenido,r1,r2,r3);
-            aniadirASubforo(e, numSubforo);
-            salida = e;
+            if (autor.getEsProfesorAlumno()) {
+                TipoMixto e = new TipoMixto(autor, titulo,contenido,r1,r2,r3,numSubforo);
+                añadirAEntradasParaRevisar(e);
+                salida = e;
+                System.out.println("La entrada ha sido creada correctamente, debe ser revisada por el administrador");
+            }
+            else {
+                System.out.println("Error. Solo los profesores estan autorizados a crear entradas mixtas");
+            }
         }
         return salida;
     }
