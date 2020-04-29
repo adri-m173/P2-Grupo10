@@ -1,4 +1,3 @@
-package practicamp2;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -12,8 +11,8 @@ public class Usuario implements Serializable {
     private boolean baneado;
     private boolean esProfesorAlumno = false;
     private ArrayList<String> notificaciones = new ArrayList<>();
-
-    public Usuario(String nick_, String n_, String a_, String p_, String e_){
+    
+    public Usuario(String nick_, String n_, String a_, String p_, String e_) {
         nick = nick_;
         nombre = n_;
         apellidos = a_;
@@ -22,16 +21,36 @@ public class Usuario implements Serializable {
         this.baneado=false;
     }
 
-    public void recibirNotificacion(String noti){
+    public void recibirNotificacion(String noti) {
         notificaciones.add(noti);
     }
 
-    public void verNotificaciones(){
+    public void verNotificaciones() {
         System.out.println("Tienes las siguientes notificaciones: " + notificaciones.toString());
     }
 
+    public void UsuarioBaneado() {
+        baneado = true;
+    }
+
+    public void UsuarioDesBaneado() {
+        baneado = false;
+    }
+
+    public boolean comprobarnick(String nick, Usuario u) {
+        return nick.equals(u.nick);
+    }
+
+    public boolean comprobarbaneo(Usuario u) {
+        return u.baneado;
+    }
+    
     public void setProfesor(){
         this.esProfesorAlumno = true;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public boolean getEsProfesorAlumno() {
@@ -52,25 +71,5 @@ public class Usuario implements Serializable {
 
     public String getPass() {
         return pass;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void UsuarioBaneado() {
-        baneado = true;
-    }
-
-    public void UsuarioDesBaneado() {
-        baneado = false;
-    }
-
-    public boolean comprobarnick(String nick, Usuario u) {
-        return nick.equals(u.nick);
-    }
-
-    public boolean comprobarbaneo(Usuario u) {
-        return u.baneado;
     }
 }

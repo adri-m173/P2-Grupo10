@@ -1,4 +1,3 @@
-package practicamp2;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -15,9 +14,11 @@ public class Sistema implements Serializable {
     private void aniadirSubforoEnForo(Subforo subforo_) {
         foro.add(subforo_);
     }
-    private void añadirAEntradasParaRevisar(Entrada e){
+
+    private void añadirAEntradasParaRevisar(Entrada e) {
         EntradasParaRevisar.add(e);
     }
+
     private ArrayList<Subforo> getForo() {
         return foro;
     }
@@ -27,7 +28,6 @@ public class Sistema implements Serializable {
     }
 
     Sistema () {
-
     }
 
     public static Sistema getInstance() {
@@ -42,7 +42,7 @@ public class Sistema implements Serializable {
         return instancia;
     }
 
-    public boolean guardarSistema(){
+    public boolean guardarSistema() {
         try {
             FileOutputStream f = new FileOutputStream("BaseDeDatos.obj");
             ObjectOutputStream finalFile = new ObjectOutputStream(f);
@@ -57,13 +57,12 @@ public class Sistema implements Serializable {
         }
     }
 
-    public static Sistema cargarSistema(){
+    public static Sistema cargarSistema() {
         Sistema s = null;
         try {
             FileInputStream file =new FileInputStream("BaseDeDatos.obj");
             ObjectInputStream inputFile = new ObjectInputStream(file);
             s = (Sistema) inputFile.readObject();
-
             inputFile.close();
             file.close();
         } catch (Exception e) {
@@ -85,9 +84,11 @@ public class Sistema implements Serializable {
         }
         return salida;
     }
-    public void Mostrar(){
+
+    public void Mostrar() {
         System.out.println(usuarios.toString());
     }
+
     private void aniadirASubforo(Entrada nuevaEntrada, int numSubforo) {
         getForo().get(numSubforo).aniadirEntrada(nuevaEntrada);
         getForo().get(numSubforo).notificar();
@@ -129,8 +130,7 @@ public class Sistema implements Serializable {
         if (!estaDisponible(email_, nick_)) {
             System.out.println("Error. El email o nick utilizado ya esta en uso");
             return null;
-        }
-        else{
+        } else {
             Usuario nuevoUsuario = new Usuario(nick_, nombre_, apellidos_, pass_, email_);
             Scanner sc = new Scanner(email_);
             sc.useDelimiter("@");
@@ -142,12 +142,10 @@ public class Sistema implements Serializable {
                 usuarios.add(nuevoUsuario);
                 System.out.println("Usuario como profesor creado correctamente");
                 nuevoUsuario.setProfesor();
-            }
-            else if (s.equals(s2)) {
+            } else if (s.equals(s2)) {
                 usuarios.add(nuevoUsuario);
                 System.out.println("Usuario como alumno creado correctamente");
-            }
-            else {
+            } else {
                 System.out.println("El correo introducido no es valido, por favor introduzca una cuenta de la Universidad");
             }
             sc.close();
@@ -173,7 +171,8 @@ public class Sistema implements Serializable {
         }
         return sesionIniciada;
     }
-    public void hacerLogout (){
+
+    public void hacerLogout () {
         sesionIniciada = false;
         usuarioConectado = null;
         System.out.println("Sesion Cerrada Correctamente");
@@ -183,12 +182,12 @@ public class Sistema implements Serializable {
         return usuarioConectado;
     }
 
-    public boolean comprobarusuario(String nick){
+    public boolean comprobarusuario(String nick) {
         boolean salida = false;
         int i = 0;
         boolean encontrado=false;
-        for (int j=0;j<=usuarios.size();j++){
-            if(!encontrado){
+        for (int j=0;j<=usuarios.size();j++) {
+            if(!encontrado) {
                 Usuario u = usuarios.get(i);
                 encontrado = u.comprobarnick(nick, u);
                 if (!encontrado)
@@ -220,7 +219,7 @@ public class Sistema implements Serializable {
         return salida;
     }
 
-    public void subscribirse(Usuario usuario, int numSubforo){
+    public void subscribirse(Usuario usuario, int numSubforo) {
         if (comprobarLogin()) {
             Subforo subforo = getForo().get(numSubforo);
             subforo.aniadirSubscriptor(usuario);
@@ -233,9 +232,10 @@ public class Sistema implements Serializable {
             subforo.eliminarSubscriptor(usuario);
         }
     }
-    public Encuesta crearEncuesta(Usuario autor, String titulo, String contenido, String r1, String r2, String r3, int numSubforo){
+
+    public Encuesta crearEncuesta(Usuario autor, String titulo, String contenido, String r1, String r2, String r3, int numSubforo) {
         Encuesta salida = null;
-        if (comprobarLogin()){
+        if (comprobarLogin()) {
             if (autor.getEsProfesorAlumno()) {
                 Encuesta e = new Encuesta(autor, titulo, contenido, r1,r2,r3,numSubforo);
                 añadirAEntradasParaRevisar(e);
@@ -247,41 +247,42 @@ public class Sistema implements Serializable {
         }
         return salida;
     }
-    
-    public TextoPlano crearTextoPlano(Usuario autor, String titulo, String contenido, int numSubforo){
+
+    public TextoPlano crearTextoPlano(Usuario autor, String titulo, String contenido, int numSubforo) {
         TextoPlano salida = null;
         if (comprobarLogin()) {
             TextoPlano e = new TextoPlano(autor, titulo,contenido, numSubforo);
             añadirAEntradasParaRevisar(e);
             salida = e;
             System.out.println("La entrada ha sido creada correctamente, debe ser revisada por el administrador");
-            
+
         }
         return salida;
     }
-    public void validarEntradas(Administrador a){
-        if (EntradasParaRevisar.isEmpty()){
+
+    public void validarEntradas(Administrador a) {
+        if (EntradasParaRevisar.isEmpty()) {
             System.out.println("No hay entradas para revisasr");
-        }
-        else{
+        } else {
             Entrada e = EntradasParaRevisar.get(0);
             a.verificarEntrada(e);
             EntradasParaRevisar.remove(e);
             aniadirASubforo(e,e.getNumSubforo());
         }
     }
-    public void vetarEntradas (Administrador a){
+
+    public void vetarEntradas (Administrador a) {
         if (EntradasParaRevisar.isEmpty()){
             System.out.println("No hay entradas para revisasr");
-        }
-        else{
+        } else {
             Entrada e = EntradasParaRevisar.get(0);
             EntradasParaRevisar.remove(e);
             a.banear(e.getAutor());
             System.out.println("Entrada denegada correctamente. El autor ha sido baneado");
         }
     }
-    public Ejercicio crearEjercicio (Usuario autor, String titulo, String enunciado, int numSubforo){
+
+    public Ejercicio crearEjercicio (Usuario autor, String titulo, String enunciado, int numSubforo) {
         Ejercicio salida = null;
         if (comprobarLogin()) {
             if (autor.getEsProfesorAlumno()) {
@@ -289,7 +290,7 @@ public class Sistema implements Serializable {
                 añadirAEntradasParaRevisar(e);
                 salida = e;
                 System.out.println("La entrada ha sido creada correctamente, debe ser revisada por el administrador");
-            
+
             } else {
                 System.out.println("Error. Solo los profesores estan autorizados a crear ejercicios");
             }
@@ -297,7 +298,7 @@ public class Sistema implements Serializable {
         return salida;
     }
 
-    public TipoMixto CrearTipoMixto(Usuario autor, String titulo, String contenido, String r1, String r2, String r3, int numSubforo){
+    public TipoMixto CrearTipoMixto(Usuario autor, String titulo, String contenido, String r1, String r2, String r3, int numSubforo) {
         TipoMixto salida = null;
         if (comprobarLogin()) {
             if (autor.getEsProfesorAlumno()) {
@@ -305,21 +306,20 @@ public class Sistema implements Serializable {
                 añadirAEntradasParaRevisar(e);
                 salida = e;
                 System.out.println("La entrada ha sido creada correctamente, debe ser revisada por el administrador");
-            }
-            else {
+            } else {
                 System.out.println("Error. Solo los profesores estan autorizados a crear entradas mixtas");
             }
         }
         return salida;
     }
 
-    public void comentarEntrada(Entrada entrada, Usuario autor, String comentario){
+    public void comentarEntrada(Entrada entrada, Usuario autor, String comentario) {
         if (comprobarLogin()) {
             entrada.comentarEntrada(autor, comentario);
         }
     }
 
-    public void votarEntradaPositivamente(Entrada entrada, Usuario usuario){
+    public void votarEntradaPositivamente(Entrada entrada, Usuario usuario) {
         if (comprobarLogin()) {
             entrada.votarPositivamente(usuario);
         }
@@ -347,13 +347,13 @@ public class Sistema implements Serializable {
         }
     }
 
-    public void mostrarEntradaSinLog(Subforo f){
+    public void mostrarEntradaSinLog(Subforo f) {
         Entrada e = f.EntradaMasVotada();
         System.out.println("La entrada mas votada es:");
         System.out.println("Titulo: " + e.getTitulo() + ". Contenido: " + e.getContenido() + ". Puntuacion: " + e.getPuntuacion());
     }
 
-    public void mostrarComentarios(Entrada entrada){
+    private void mostrarComentarios(Entrada entrada) {
         if (comprobarLogin()) {
             System.out.println("Los comentarios de la entrada: " + entrada.getTitulo() + " son: ");
             for (int i = 0; i <= entrada.getComentarios().size()-1; i++) {
@@ -362,7 +362,7 @@ public class Sistema implements Serializable {
         }
     }
 
-    public void mostrarEntrada(Entrada entrada){
+    public void mostrarEntrada(Entrada entrada) {
         if (comprobarLogin()) {
             if (entrada.getEsVisible()) {
                 System.out.println("Mostrando entrada:");
@@ -374,7 +374,7 @@ public class Sistema implements Serializable {
         }
     }
 
-    public void mostrarNotificaciones(Usuario usuario){
+    public void mostrarNotificaciones(Usuario usuario) {
         if (comprobarLogin()) {
             usuario.verNotificaciones();
         }

@@ -1,7 +1,6 @@
-package practicamp2;
-
 import java.io.Serializable;
 
+//La clase Administrador hereda de la clase Usuario
 public class Administrador extends Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
 
