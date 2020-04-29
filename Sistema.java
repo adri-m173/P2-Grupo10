@@ -153,7 +153,7 @@ public class Sistema implements Serializable {
         }
     }
 
-    public boolean hacerLogin(String nick_, String pass_) {
+    public boolean hacerLogin(String nick_, String pass_, Usuario usuario) {
         if (usuarios == null || usuarios.size() <= 0) {
             System.out.println("No existen usuarios registrados");
         }
@@ -163,6 +163,9 @@ public class Sistema implements Serializable {
                 usuarioConectado = usr;
                 System.out.println("Login realizado correctamente");
                 System.out.println("Bienvenido, " + usr.getNombre() + " " + usr.getApellidos());
+				if (comprobarLogin()) {
+                    usuario.verNotificaciones();
+                }
                 break;
             }
         }
