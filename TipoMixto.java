@@ -1,3 +1,4 @@
+package practicamp2;
 import java.io.Serializable;
 
 //La clase TipoMixto hereda de la clase Entrada

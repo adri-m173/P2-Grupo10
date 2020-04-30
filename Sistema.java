@@ -1,3 +1,4 @@
+package practicamp2;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -15,7 +16,7 @@ public class Sistema implements Serializable {
         foro.add(subforo_);
     }
 
-    private void añadirAEntradasParaRevisar(Entrada e) {
+    private void aniadirAEntradasParaRevisar(Entrada e) {
         EntradasParaRevisar.add(e);
     }
 
@@ -28,13 +29,15 @@ public class Sistema implements Serializable {
     }
 
     Sistema () {
+    //crea la instancia en caso de que no haya sido creada
     }
-
+    
     public static Sistema getInstance() {
         if (instancia == null) {
             File f = new File("BaseDeDatos.obj");
             if (f.exists()){
                 instancia = cargarSistema();
+                //el sistema es igual a la carga guardada anteriormente
             } else {
                 instancia =  new Sistema();
             }
@@ -241,7 +244,7 @@ public class Sistema implements Serializable {
         if (comprobarLogin()) {
             if (autor.getEsProfesorAlumno()) {
                 Encuesta e = new Encuesta(autor, titulo, contenido, r1,r2,r3,numSubforo);
-                añadirAEntradasParaRevisar(e);
+                aniadirAEntradasParaRevisar(e);
                 salida = e;
                 System.out.println("La entrada ha sido creada correctamente, debe ser revisada por el administrador");
             } else {
@@ -255,7 +258,7 @@ public class Sistema implements Serializable {
         TextoPlano salida = null;
         if (comprobarLogin()) {
             TextoPlano e = new TextoPlano(autor, titulo,contenido, numSubforo);
-            añadirAEntradasParaRevisar(e);
+            aniadirAEntradasParaRevisar(e);
             salida = e;
             System.out.println("La entrada ha sido creada correctamente, debe ser revisada por el administrador");
 
@@ -290,7 +293,7 @@ public class Sistema implements Serializable {
         if (comprobarLogin()) {
             if (autor.getEsProfesorAlumno()) {
                 Ejercicio e = new Ejercicio(autor, titulo,enunciado,numSubforo);
-                añadirAEntradasParaRevisar(e);
+                aniadirAEntradasParaRevisar(e);
                 salida = e;
                 System.out.println("La entrada ha sido creada correctamente, debe ser revisada por el administrador");
 
@@ -306,7 +309,7 @@ public class Sistema implements Serializable {
         if (comprobarLogin()) {
             if (autor.getEsProfesorAlumno()) {
                 TipoMixto e = new TipoMixto(autor, titulo,contenido,r1,r2,r3,numSubforo);
-                añadirAEntradasParaRevisar(e);
+                aniadirAEntradasParaRevisar(e);
                 salida = e;
                 System.out.println("La entrada ha sido creada correctamente, debe ser revisada por el administrador");
             } else {

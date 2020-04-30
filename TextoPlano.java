@@ -1,3 +1,4 @@
+package practicamp2;
 import java.io.Serializable;
 
 //La clase TextoPlano hereda de la clase Entrada

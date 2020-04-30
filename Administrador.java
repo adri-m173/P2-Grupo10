@@ -1,3 +1,4 @@
+package practicamp2;
 import java.io.Serializable;
 
 //La clase Administrador hereda de la clase Usuario

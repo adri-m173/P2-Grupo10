@@ -1,3 +1,4 @@
+package practicamp2;
 import java.io.Serializable;
 
 public class Demostrador implements Serializable {

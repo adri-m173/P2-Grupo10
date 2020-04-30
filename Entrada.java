@@ -1,3 +1,4 @@
+package practicamp2;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -11,7 +12,9 @@ public class Entrada implements Serializable {
     private boolean esVisible = false;
     private ArrayList<Comentario> comentarios = new ArrayList<>();
     private ArrayList<Usuario> Likes = new ArrayList<>();
+    //en esta lista se guarda información sobre qué usuarios han votado positivamente
     private ArrayList<Usuario> Dislikes = new ArrayList<>();
+    //en esta lista se guarda información sobre qué usuarios han votado negativamente
 
     public Entrada(Usuario autor_, String titulo_, String contenido_, int n) {
         this.autor = autor_;
@@ -36,6 +39,7 @@ public class Entrada implements Serializable {
             }
             else {
                 this.puntuacion = puntuacion + 1;
+                //el sistema comprueba si el usuario ha dado un voto negativo anteriormente
                 if(Dislikes.contains(usuario)) {
                     Dislikes.remove(usuario);
                     this.puntuacion = puntuacion + 1;
@@ -55,6 +59,7 @@ public class Entrada implements Serializable {
             }
             else{
                 this.puntuacion = puntuacion - 1;
+                //el sistema comprueba si el usuario ha dado un voto positivo anteriormente
                 if (Likes.contains(usuario)) {
                     Likes.remove(usuario);
                     this.puntuacion = puntuacion - 1;

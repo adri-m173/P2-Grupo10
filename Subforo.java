@@ -1,3 +1,4 @@
+package practicamp2;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -15,6 +16,7 @@ public class Subforo implements Serializable {
         int i;
         Entrada e = entradas.get(0);
         for (i=0;i<entradas.size();i++) {
+        //se comprueban todas hasta encontrar la mas votada
             Entrada e2 = entradas.get(i);
             if (e.getPuntuacion() < e2.getPuntuacion()) {
                 e = e2;
