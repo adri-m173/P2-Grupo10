@@ -9,6 +9,7 @@ public class Usuario implements Serializable {
     private final String pass;
     private final String email;
     private boolean baneado;
+    private int DiasBaneado;
     private boolean esProfesorAlumno = false;
     private ArrayList<String> notificaciones = new ArrayList<>();
     
@@ -19,8 +20,17 @@ public class Usuario implements Serializable {
         pass = p_;
         email = e_;
         this.baneado=false;
+        this.DiasBaneado=0;
     }
-
+    public void avanzarDias(int dias){
+        this.DiasBaneado=DiasBaneado-dias;
+        System.out.println("Se han avanzado "+ dias + " dias");
+        if (this.DiasBaneado<=0){
+            this.baneado=false;
+            this.DiasBaneado=0;
+            System.out.println("El usuario ya no está baneado");
+        }
+    }
     public void recibirNotificacion(String noti) {
         notificaciones.add(noti);
     }
@@ -29,8 +39,9 @@ public class Usuario implements Serializable {
         System.out.println("Tienes las siguientes notificaciones: " + notificaciones.toString());
     }
 
-    public void UsuarioBaneado() {
+    public void UsuarioBaneado(int dias) {
         baneado = true;
+        DiasBaneado = dias;
     }
 
     public void UsuarioDesBaneado() {

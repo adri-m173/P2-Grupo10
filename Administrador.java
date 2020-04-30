@@ -7,8 +7,8 @@ public class Administrador extends Usuario implements Serializable {
     public Administrador(String nick_, String n_, String a_, String p_, String e_) {
         super(nick_, n_, a_, p_, e_);
     }
-    public void banear (Usuario u){
-        u.UsuarioBaneado();
+    public void banear (Usuario u, int dias){
+        u.UsuarioBaneado(dias);
     }
     public void desbanear (Usuario u){
         u.UsuarioDesBaneado();

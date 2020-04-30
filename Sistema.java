@@ -276,13 +276,13 @@ public class Sistema implements Serializable {
         }
     }
 
-    public void vetarEntradas (Administrador a) {
+    public void vetarEntradas (Administrador a,int dias) {
         if (EntradasParaRevisar.isEmpty()){
             System.out.println("No hay entradas para revisasr");
         } else {
             Entrada e = EntradasParaRevisar.get(0);
             EntradasParaRevisar.remove(e);
-            a.banear(e.getAutor());
+            a.banear(e.getAutor(),dias);
             System.out.println("Entrada denegada correctamente. El autor ha sido baneado");
         }
     }

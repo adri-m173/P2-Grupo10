@@ -58,7 +58,7 @@ public class Demostrador implements Serializable {
                 }
 
                 if (sistema.hacerLogin("usr3", "contra",usuario3)) { //El administrador vuelve a hacer login en el sistema
-                    sistema.vetarEntradas((Administrador) sistema.getUsuarioConectado());
+                    sistema.vetarEntradas((Administrador) sistema.getUsuarioConectado(),3);
                     //El administrador puede vetar entradas, y al hacerlo su autor queda baneado automáticamente
                     sistema.hacerLogout();
                 }
@@ -68,9 +68,17 @@ public class Demostrador implements Serializable {
                         TextoPlano entradaNA2 = sistema.crearTextoPlano(sistema.getUsuarioConectado(), "Entrada Que no será visible", "Contenido de la entrada 1", 0);
                         //El usuario no puede hacer nada ya que está baneado por crear una entrada que ha sido vetada
                     }
+                    
+                    usuario5.avanzarDias(3);
+                    //avanzan los dias y el usuario deja de estar baneado
+                    
+                    if (sistema.comprobarusuario("usr5")) {
+                        TextoPlano entradaNA2 = sistema.crearTextoPlano(sistema.getUsuarioConectado(), "Entrada que comprueba baneos", "enesimo contenido", 0);
+                    //el usuario deja de estar baneado, por tanto, puede volver utilizar el sistema.
+                    }
                     sistema.hacerLogout();
                 }
-
+                
                 if (sistema.hacerLogin("usr1", "contra",usuario1)) {
                     if (sistema.comprobarusuario("usr1")) {
                         sistema.darseBaja(sistema.getUsuarioConectado(), 1); //El usuario se da de baja del Subforo 2
