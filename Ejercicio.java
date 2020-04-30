@@ -1,4 +1,3 @@
-package practicamp2;
 import java.io.Serializable;
 
 //La clase Ejercicio hereda de la clase Entrada

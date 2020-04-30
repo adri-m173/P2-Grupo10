@@ -1,4 +1,3 @@
-package practicamp2;
 import java.io.Serializable;
 
 public class Demostrador implements Serializable {
@@ -74,7 +73,6 @@ public class Demostrador implements Serializable {
 
                 if (sistema.hacerLogin("usr1", "contra",usuario1)) {
                     if (sistema.comprobarusuario("usr1")) {
-                        //sistema.mostrarNotificaciones(sistema.getUsuarioConectado()); //Se muestran las notificaciones del usuario por estar subscrito al Subforo 2
                         sistema.darseBaja(sistema.getUsuarioConectado(), 1); //El usuario se da de baja del Subforo 2
                         sistema.comentarEntrada(entrada1, sistema.getUsuarioConectado(), "Esto es un comentario para la entrada 1");
                         //El usuario hace un comentario en su propia entrada

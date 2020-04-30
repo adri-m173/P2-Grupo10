@@ -1,4 +1,3 @@
-package practicamp2;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -29,9 +28,9 @@ public class Sistema implements Serializable {
     }
 
     Sistema () {
-    //crea la instancia en caso de que no haya sido creada
+        //crea la instancia en caso de que no haya sido creada
     }
-    
+
     public static Sistema getInstance() {
         if (instancia == null) {
             File f = new File("BaseDeDatos.obj");
@@ -166,7 +165,7 @@ public class Sistema implements Serializable {
                 usuarioConectado = usr;
                 System.out.println("Login realizado correctamente");
                 System.out.println("Bienvenido, " + usr.getNombre() + " " + usr.getApellidos());
-				if (comprobarLogin()) {
+                if (comprobarLogin()) {
                     usuario.verNotificaciones();
                 }
                 break;
@@ -377,12 +376,6 @@ public class Sistema implements Serializable {
             } else {
                 System.out.println("Error. La entrada no es visible porque debe ser verificada por un administrador");
             }
-        }
-    }
-
-    public void mostrarNotificaciones(Usuario usuario) {
-        if (comprobarLogin()) {
-            usuario.verNotificaciones();
         }
     }
 }
