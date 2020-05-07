@@ -1,10 +1,10 @@
-package com.p2;
+package com.p3;
 
-import org.junit.jupiter.api.*;
+import org.junit.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class UsuarioTest {
+public class UsuarioTest {
     Administrador admin = new Administrador("nick", "nombre", "apellidos", "pass", "email");
     Usuario usuario = new Usuario("nick", "nombre", "apellido", "pass", "email");
     private final int dias = 5;
