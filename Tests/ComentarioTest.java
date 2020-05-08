@@ -13,25 +13,19 @@ public class ComentarioTest {
 
     @Test
     public void votarPositivamente() {
+        int puntuacionFutura = comentario1.getPuntuacion() + 1;
         comentario1.votarPositivamente(usuario2); //El usuario2 vota positivamente el comentario1 del usuario1
-        assertEquals(1, comentario1.getPuntuacion()); //Se comprueba que la puntuacion del comentario1 es ahora igual a 1
+        assertEquals(puntuacionFutura, comentario1.getPuntuacion()); //Se comprueba que la puntuacion del comentario1 es ahora igual a 1
+        comentario1.votarPositivamente(usuario1); //El usuario1 intenta votar positivamente su propio comentario
+        assertEquals(puntuacionFutura, comentario1.getPuntuacion()); //Se comprueba que la puntuacion del comentario del usuario1 no ha variado
     }
 
     @Test
     public void votarNegativamente() {
+        int puntuacionFutura = comentario2.getPuntuacion() - 1;
         comentario2.votarNegativamente(usuario1); //El usuario1 vota negativamente el comentario2 del usuario2
-        assertEquals(-1, comentario2.getPuntuacion()); //Se comprueba que la puntuacion del comentario2 es ahora igual a -1
-    }
-
-    @Test
-    public void votarComentarioPropio() {
-        comentario1.votarPositivamente(usuario1); //El usuario1 intenta votar positivamente su propio comentario
-        assertEquals(0, comentario1.getPuntuacion()); //Se comprueba que la puntuacion del comentario del usuario1 no ha variado
-        comentario1.votarNegativamente(usuario1); //El usuario1 intenta votar negativamente su propio comentario
-        assertEquals(0, comentario1.getPuntuacion()); //Se comprueba que la puntuacion del comentario del usuario1 no ha variado
-        comentario2.votarPositivamente(usuario2); //El usuario2 intenta votar positivamente su propio comentario
-        assertEquals(0, comentario2.getPuntuacion()); //Se comprueba que la puntuacion del comentario del usuario2 no ha variado
+        assertEquals(puntuacionFutura, comentario2.getPuntuacion()); //Se comprueba que la puntuacion del comentario2 es ahora igual a -1
         comentario2.votarNegativamente(usuario2); //El usuario2 intenta votar negativamente su propio comentario
-        assertEquals(0, comentario2.getPuntuacion()); //Se comprueba que la puntuacion del comentario del usuario2 no ha variado
+        assertEquals(puntuacionFutura, comentario2.getPuntuacion()); //Se comprueba que la puntuacion del comentario del usuario2 no ha variado
     }
 }
