@@ -1,12 +1,16 @@
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.*;
 
+import static org.junit.Assert.*;
 
+/**
+ *
+ * @author anton
+ */
 public class ComentarioTest {
     Usuario usuario1 = new Usuario("nick1", "nombre1", "apellido1", "pass1", "email1");
     Usuario usuario2 = new Usuario("nick2", "nombre2", "apellido2", "pass2", "email2");
-    Comentario comentario1 = new Comentario(usuario1,"comentario1");
-    Comentario comentario2 = new Comentario(usuario2,"comentario2");
+    Comentario comentario = new Comentario(usuario1,"comentario1");
+
     
     public ComentarioTest() {
     }
@@ -17,8 +21,8 @@ public class ComentarioTest {
     @Test
     public void testVotarPositivamente() {
         
-        comentario1.votarPositivamente(usuario2);
-        int puntuacioncomentario1 = comentario1.getPuntuacion();
+        comentario.votarPositivamente(usuario2);
+        int puntuacioncomentario1 = comentario.getPuntuacion();
         assertEquals(1,puntuacioncomentario1);
     }
 
@@ -28,8 +32,8 @@ public class ComentarioTest {
     @Test
     public void testVotarNegativamente() {
         
-        comentario2.votarPositivamente(usuario1);
-        int puntuacioncomentario2 = comentario2.getPuntuacion();
+        comentario.votarNegativamente(usuario2);
+        int puntuacioncomentario2 = comentario.getPuntuacion();
         assertEquals(-1,puntuacioncomentario2);
     }
 
@@ -38,8 +42,8 @@ public class ComentarioTest {
      */
     @Test
     public void testGetComentario() {
-        String comentario = comentario1.getComentario();
-        assertEquals("comentario1",comentario);
+        String com = comentario.getComentario();
+        assertEquals("comentario1",com);
     }
 
     /**
@@ -47,8 +51,8 @@ public class ComentarioTest {
      */
     @Test
     public void testGetPuntuacion() {
-        int puntuacion = comentario1.getPuntuacion();
-        assertEquals(1,puntuacion);
+        int puntuacion = comentario.getPuntuacion();
+        assertEquals(0,puntuacion);
     }
     
 }
