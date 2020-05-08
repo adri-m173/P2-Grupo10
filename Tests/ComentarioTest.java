@@ -1,58 +1,36 @@
-import org.junit.*;
+package com.p3;
+
+import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- *
- * @author anton
- */
 public class ComentarioTest {
     Usuario usuario1 = new Usuario("nick1", "nombre1", "apellido1", "pass1", "email1");
     Usuario usuario2 = new Usuario("nick2", "nombre2", "apellido2", "pass2", "email2");
-    Comentario comentario = new Comentario(usuario1,"comentario1");
+    Comentario comentario1 = new Comentario(usuario1,"comentario1");
+    Comentario comentario2 = new Comentario(usuario2,"comentario2");
 
-    
-    public ComentarioTest() {
-    }
-
-    /**
-     * Test of votarPositivamente method, of class Comentario.
-     */
     @Test
-    public void testVotarPositivamente() {
-        
-        comentario.votarPositivamente(usuario2);
-        int puntuacioncomentario1 = comentario.getPuntuacion();
-        assertEquals(1,puntuacioncomentario1);
+    public void votarPositivamente() {
+        comentario1.votarPositivamente(usuario2);
+        assertEquals(1, comentario1.getPuntuacion());
     }
 
-    /**
-     * Test of votarNegativamente method, of class Comentario.
-     */
     @Test
-    public void testVotarNegativamente() {
-        
-        comentario.votarNegativamente(usuario2);
-        int puntuacioncomentario2 = comentario.getPuntuacion();
-        assertEquals(-1,puntuacioncomentario2);
+    public void votarNegativamente() {
+        comentario2.votarNegativamente(usuario1);
+        assertEquals(-1, comentario2.getPuntuacion());
     }
 
-    /**
-     * Test of getComentario method, of class Comentario.
-     */
     @Test
-    public void testGetComentario() {
-        String com = comentario.getComentario();
-        assertEquals("comentario1",com);
+    public void votarComentarioPropio() {
+        comentario1.votarPositivamente(usuario1);
+        assertEquals(0, comentario1.getPuntuacion());
+        comentario1.votarNegativamente(usuario1);
+        assertEquals(0, comentario1.getPuntuacion());
+        comentario2.votarPositivamente(usuario2);
+        assertEquals(0, comentario2.getPuntuacion());
+        comentario2.votarNegativamente(usuario2);
+        assertEquals(0, comentario2.getPuntuacion());
     }
-
-    /**
-     * Test of getPuntuacion method, of class Comentario.
-     */
-    @Test
-    public void testGetPuntuacion() {
-        int puntuacion = comentario.getPuntuacion();
-        assertEquals(0,puntuacion);
-    }
-    
 }
