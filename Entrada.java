@@ -11,9 +11,9 @@ public class Entrada implements Serializable {
     private boolean esVisible = false;
     private ArrayList<Comentario> comentarios = new ArrayList<>();
     private ArrayList<Usuario> Likes = new ArrayList<>();
-    //en esta lista se guarda información sobre qué usuarios han votado positivamente
+    //en esta lista se guarda informacion sobre que usuarios han votado positivamente
     private ArrayList<Usuario> Dislikes = new ArrayList<>();
-    //en esta lista se guarda información sobre qué usuarios han votado negativamente
+    //en esta lista se guarda informacion sobre que usuarios han votado negativamente
 
     public Entrada(Usuario autor_, String titulo_, String contenido_, int n) {
         this.autor = autor_;
