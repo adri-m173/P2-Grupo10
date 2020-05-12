@@ -27,6 +27,10 @@ public class Sistema implements Serializable {
         return usuarios;
     }
 
+    public boolean getSesionIniciada() {
+        return sesionIniciada;
+    }
+
     Sistema () {
         //crea la instancia en caso de que no haya sido creada
     }
@@ -155,7 +159,7 @@ public class Sistema implements Serializable {
         }
     }
 
-    public boolean hacerLogin(String nick_, String pass_, Usuario usuario) {
+    public boolean hacerLogin(String nick_, String pass_) {
         if (usuarios == null || usuarios.size() <= 0) {
             System.out.println("No existen usuarios registrados");
         }
@@ -166,7 +170,7 @@ public class Sistema implements Serializable {
                 System.out.println("Login realizado correctamente");
                 System.out.println("Bienvenido, " + usr.getNombre() + " " + usr.getApellidos());
                 if (comprobarLogin()) {
-                    usuario.verNotificaciones();
+                    usr.verNotificaciones();
                 }
                 break;
             }

@@ -7,6 +7,8 @@ public class Demostrador implements Serializable {
         //Si existe un fichero que guarde los datos del sistema, se carga. Si no, se crea un fichero nuevo que guarde el nuevo sistema
         Sistema sistema = Sistema.getInstance(); //Singleton
 
+        sistema.hacerLogin("nick", "contra"); //Intentamos hacer login cuando no hay usuarios registrados en el sistema (primera ejecucion)
+
         //Registramos los diferentes usuarios en el sistema
         Usuario usuario1 = sistema.registrarUsuario("usr1", "Usuario", "Uno", "contra","usr1@urjc.es");
         //Usuario profesor
@@ -21,7 +23,7 @@ public class Demostrador implements Serializable {
         Usuario usuario4 = sistema.registrarUsuario("usr2", "Usuario", "Cuatro", "contra", "usr2@alumnos.urjc.es");
         //Cuenta de correo en uso
 
-        if (sistema.hacerLogin("usr1", "contra", usuario1)) { //Si se hace login correctamente, entonces:
+        if (sistema.hacerLogin("usr1", "contra")) { //Si se hace login correctamente, entonces:
             if (sistema.comprobarusuario("usr1")) { //Se comprueba si el usuario está baneado
                 Subforo subforo1 = sistema.iniciarSubforo(sistema.getUsuarioConectado(),"Subforo 1");
                 Subforo subforo2 = sistema.iniciarSubforo(sistema.getUsuarioConectado(), "Subforo 2");
@@ -39,7 +41,7 @@ public class Demostrador implements Serializable {
 
                 sistema.hacerLogout(); //El usuario 1 hace logout en el sistema
 
-                if (sistema.hacerLogin("usr3", "contra",usuario3)) { //El administrador del sistema hace login en el mismo. Si lo hace correctamente, entonces:
+                if (sistema.hacerLogin("usr3", "contra")) { //El administrador del sistema hace login en el mismo. Si lo hace correctamente, entonces:
                     //No se comprueba si el administrador está baneado
                     sistema.validarEntradas((Administrador) sistema.getUsuarioConectado());
                     sistema.validarEntradas((Administrador) sistema.getUsuarioConectado());
@@ -49,7 +51,7 @@ public class Demostrador implements Serializable {
                     sistema.hacerLogout(); //El administrador hace logout en el sistema
                 }
 
-                if (sistema.hacerLogin("usr5", "contra",usuario5)) {
+                if (sistema.hacerLogin("usr5", "contra")) {
                     if (sistema.comprobarusuario("usr5")) {
                         TextoPlano entradaNA = sistema.crearTextoPlano(sistema.getUsuarioConectado(), "Entrada No Apropiada", "Contenido de la entrada 1", 0);
                         //Esta entrada creada será vetada por el administrador posteriormente
@@ -57,29 +59,29 @@ public class Demostrador implements Serializable {
                     }
                 }
 
-                if (sistema.hacerLogin("usr3", "contra",usuario3)) { //El administrador vuelve a hacer login en el sistema
+                if (sistema.hacerLogin("usr3", "contra")) { //El administrador vuelve a hacer login en el sistema
                     sistema.vetarEntradas((Administrador) sistema.getUsuarioConectado(),3);
                     //El administrador puede vetar entradas, y al hacerlo su autor queda baneado automáticamente
                     sistema.hacerLogout();
                 }
 
-                if (sistema.hacerLogin("usr5", "contra",usuario5)) {
+                if (sistema.hacerLogin("usr5", "contra")) {
                     if (sistema.comprobarusuario("usr5")) {
                         TextoPlano entradaNA2 = sistema.crearTextoPlano(sistema.getUsuarioConectado(), "Entrada Que no será visible", "Contenido de la entrada 1", 0);
                         //El usuario no puede hacer nada ya que está baneado por crear una entrada que ha sido vetada
                     }
-                    
+
                     usuario5.avanzarDias(3);
                     //avanzan los dias y el usuario deja de estar baneado
-                    
+
                     if (sistema.comprobarusuario("usr5")) {
                         TextoPlano entradaNA2 = sistema.crearTextoPlano(sistema.getUsuarioConectado(), "Entrada que comprueba baneos", "enesimo contenido", 0);
-                    //el usuario deja de estar baneado, por tanto, puede volver utilizar el sistema.
+                        //el usuario deja de estar baneado, por tanto, puede volver utilizar el sistema.
                     }
                     sistema.hacerLogout();
                 }
-                
-                if (sistema.hacerLogin("usr1", "contra",usuario1)) {
+
+                if (sistema.hacerLogin("usr1", "contra")) {
                     if (sistema.comprobarusuario("usr1")) {
                         sistema.darseBaja(sistema.getUsuarioConectado(), 1); //El usuario se da de baja del Subforo 2
                         sistema.comentarEntrada(entrada1, sistema.getUsuarioConectado(), "Esto es un comentario para la entrada 1");
@@ -107,7 +109,7 @@ public class Demostrador implements Serializable {
 
                 // *********FIN USUARIO NO CONECTADO**********
 
-                if (sistema.hacerLogin("usr2", "contra",usuario2)) {
+                if (sistema.hacerLogin("usr2", "contra")) {
                     if (sistema.comprobarusuario("usr2")) {
                         Subforo subforo3 = sistema.iniciarSubforo(usuario2, "Subforo 3");
                         //Los usuarios que no son profesores no pueden crear subforos
