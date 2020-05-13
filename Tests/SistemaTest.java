@@ -1,4 +1,3 @@
-package com.p3;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -99,10 +98,22 @@ public class SistemaTest {
 
     @Test
     public void crearEncuesta() {
+        int tamanioEsperado = sistema.getEntradasParaRevisar().size()+1;//Determinamos el tamaño esperado para el assert
+        Usuario usr = sistema.registrarUsuario("nick11", "nombre", "apellidos", "contra", "profe@urjc.es");//Registramos un profesor el cual si es capaz de crear una encuesta
+        sistema.hacerLogin("nick11", "contra");//Hacemos login con el profesor recien creado
+        Encuesta e =sistema.crearEncuesta(usr, "titulo", "contenido", "r1", "r2", "r3", 0);//Creamos encuesta con el profesor
+        assertEquals(1,sistema.getEntradasParaRevisar().size());//Comprobamos si la encuesta se ha creado correctamente
+        sistema.getEntradasParaRevisar().remove(e);
     }
 
     @Test
     public void crearTextoPlano() {
+        int tamanioEsperado = sistema.getEntradasParaRevisar().size()+1;//Determinamos el tamaño esperado para el assert
+        Usuario usr = sistema.registrarUsuario("nick12", "nombre", "apellidos", "contra", "alumno@alumnos.urjc.es");//Registramos un alumno el cual si es capaz de crear un texto plano
+        sistema.hacerLogin("nick12", "contra");//Hacemos login con el alumno recien creado
+        TextoPlano t = sistema.crearTextoPlano(usr, "titulo", "contenido", 0);//Creamos texto plano con el alumno
+        assertEquals(1,sistema.getEntradasParaRevisar().size());//Comprobamos si el texto plano se ha creado correctamente
+        sistema.getEntradasParaRevisar().remove(t);
     }
 
     @Test
@@ -115,10 +126,22 @@ public class SistemaTest {
 
     @Test
     public void crearEjercicio() {
+        int tamanioEsperado = sistema.getEntradasParaRevisar().size()+1;//Determinamos el tamaño esperado para el assert
+        Usuario usr = sistema.registrarUsuario("nick13", "nombre", "apellidos", "contra", "profe@urjc.es");//Registramos un profesor el cual si es capaz de crear un ejercicio
+        sistema.hacerLogin("nick13", "contra");//Hacemos login con el profesor recien creado
+        Ejercicio e = sistema.crearEjercicio(usr, "titulo", "enunciado", 0);//Creamos ejercicio con el profesor
+        assertEquals(1,sistema.getEntradasParaRevisar().size());//Comprobamos si el ejercicio se ha creado correctamente
+        sistema.getEntradasParaRevisar().remove(e);
     }
 
     @Test
     public void crearTipoMixto() {
+        int tamanioEsperado = sistema.getEntradasParaRevisar().size()+1;//Determinamos el tamaño esperado para el assert
+        Usuario usr = sistema.registrarUsuario("nick14", "nombre", "apellidos", "contra", "profe@urjc.es");//Registramos un profesor el cual si es capaz de crear un tipo mixto
+        sistema.hacerLogin("nick14", "contra");//Hacemos login con el profesor recien creado
+        TipoMixto t = sistema.CrearTipoMixto(usr, "titulo", "contenido", "r1", "r2", "r3", 0);//Creamos tipo mixto con el profesor
+        assertEquals(1,sistema.getEntradasParaRevisar().size());//Comprobamos si el tipo mixto se ha creado correctamente
+        sistema.getEntradasParaRevisar().remove(t);
     }
 
     @Test
@@ -127,18 +150,22 @@ public class SistemaTest {
 
     @Test
     public void votarEntradaPositivamente() {
+        //Metodo comprobado correctamente en clase correspondiente
     }
 
     @Test
     public void votarEntradaNegativamente() {
+        //Metodo comprobado correctamente en clase correspondiente
     }
 
     @Test
     public void votarComentarioPositivamente() {
+        //Metodo comprobado correctamente en clase correspondiente
     }
 
     @Test
     public void votarComentarioNegativamente() {
+        //Metodo comprobado correctamente en clase correspondiente
     }
 
     @Test

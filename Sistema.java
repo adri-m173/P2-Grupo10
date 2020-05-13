@@ -23,6 +23,12 @@ public class Sistema implements Serializable {
         return foro;
     }
 
+    public ArrayList<Entrada> getEntradasParaRevisar() {
+        return EntradasParaRevisar;
+    }
+    
+    
+
     public ArrayList<Usuario> getUsuarios() {
         return usuarios;
     }
