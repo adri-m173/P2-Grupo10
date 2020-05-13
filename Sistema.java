@@ -19,7 +19,7 @@ public class Sistema implements Serializable {
         EntradasParaRevisar.add(e);
     }
 
-    private ArrayList<Subforo> getForo() {
+    public ArrayList<Subforo> getForo() {
         return foro;
     }
 
@@ -269,28 +269,6 @@ public class Sistema implements Serializable {
         return salida;
     }
 
-    public void validarEntradas(Administrador a) {
-        if (EntradasParaRevisar.isEmpty()) {
-            System.out.println("No hay entradas para revisasr");
-        } else {
-            Entrada e = EntradasParaRevisar.get(0);
-            a.verificarEntrada(e);
-            EntradasParaRevisar.remove(e);
-            aniadirASubforo(e,e.getNumSubforo());
-        }
-    }
-
-    public void vetarEntradas (Administrador a,int dias) {
-        if (EntradasParaRevisar.isEmpty()){
-            System.out.println("No hay entradas para revisasr");
-        } else {
-            Entrada e = EntradasParaRevisar.get(0);
-            EntradasParaRevisar.remove(e);
-            a.banear(e.getAutor(),dias);
-            System.out.println("Entrada denegada correctamente. El autor ha sido baneado");
-        }
-    }
-
     public Ejercicio crearEjercicio (Usuario autor, String titulo, String enunciado, int numSubforo) {
         Ejercicio salida = null;
         if (comprobarLogin()) {
@@ -320,6 +298,28 @@ public class Sistema implements Serializable {
             }
         }
         return salida;
+    }
+
+    public void validarEntradas(Administrador a) {
+        if (EntradasParaRevisar.isEmpty()) {
+            System.out.println("No hay entradas para revisasr");
+        } else {
+            Entrada e = EntradasParaRevisar.get(0);
+            a.verificarEntrada(e);
+            EntradasParaRevisar.remove(e);
+            aniadirASubforo(e,e.getNumSubforo());
+        }
+    }
+
+    public void vetarEntradas (Administrador a,int dias) {
+        if (EntradasParaRevisar.isEmpty()){
+            System.out.println("No hay entradas para revisasr");
+        } else {
+            Entrada e = EntradasParaRevisar.get(0);
+            EntradasParaRevisar.remove(e);
+            a.banear(e.getAutor(),dias);
+            System.out.println("Entrada denegada correctamente. El autor ha sido baneado");
+        }
     }
 
     public void comentarEntrada(Entrada entrada, Usuario autor, String comentario) {
