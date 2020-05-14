@@ -7,6 +7,12 @@ public class SistemaTest {
 
     @Test
     public void guardarSistema() {
+        Sistema sistema2 = Sistema.getInstance();
+        //Creamos un objeto sistema con la clase getInstance y lo guardamos con la clase guardarSistema
+        sistema2.guardarSistema();
+        //Como ya existe un sistema y se ha guardado, al usar getInstance se llamara a la clase cargarSistema.
+        Sistema sistema3 = Sistema.getInstance();
+        assertEquals(sistema2, sistema3);
     }
 
     @Test
