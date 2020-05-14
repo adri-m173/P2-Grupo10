@@ -14,7 +14,7 @@ public class Sistema implements Serializable {
     private void aniadirSubforoEnForo(Subforo subforo_) {
         foro.add(subforo_);
     }
-    
+
     private void aniadirAEntradasParaRevisar(Entrada e) {
         EntradasParaRevisar.add(e);
     }
@@ -26,8 +26,8 @@ public class Sistema implements Serializable {
     public ArrayList<Entrada> getEntradasParaRevisar() {
         return EntradasParaRevisar;
     }
-    
-    
+
+
 
     public ArrayList<Usuario> getUsuarios() {
         return usuarios;
@@ -83,7 +83,7 @@ public class Sistema implements Serializable {
         }
         return s;
     }
-    
+
     private boolean estaDisponible(String email, String nick) {
         boolean salida = true;
         if (usuarios.size() > 0) {

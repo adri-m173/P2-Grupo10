@@ -1,7 +1,7 @@
-package com.p3;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+
 public class SubforoTest {
     Usuario usuario = new Usuario("nick", "nombre", "apellidos", "contra", "email");
     Usuario usuario2 = new Usuario("nick2", "nombre2", "apellidos2", "contra2", "email2");

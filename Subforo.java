@@ -56,8 +56,4 @@ public class Subforo implements Serializable {
     public ArrayList<Entrada> getEntradas() {
         return entradas;
     }
-
-    public ArrayList<Usuario> getUsuariosSubscritos() {
-        return usuariosSubscritos;
-    }   
 }

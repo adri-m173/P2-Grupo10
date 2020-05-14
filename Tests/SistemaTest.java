@@ -1,4 +1,3 @@
-package com.p3;
 import java.util.ArrayList;
 import org.junit.Test;
 
@@ -7,7 +6,7 @@ import static org.junit.Assert.*;
 public class SistemaTest {
     Sistema sistema = Sistema.getInstance();
 
-    @Test    
+    @Test
     public void guardarSistema() {
         Sistema sistema2 = Sistema.getInstance();
         //Creamos un objeto sistema con la clase getInstance y lo guardamos con la clase guardarSistema
@@ -63,7 +62,7 @@ public class SistemaTest {
         assertNull(sistema.getUsuarioConectado()); //Comprobamos que la variable UsuarioConectado en el sistema está apuntando a null
     }
 
-    @Test 
+    @Test
     public void comprobarusuario() {
         sistema.registrarUsuario("nick8", "nombre", "apellidos", "contra", "profe@urjc.es"); //Registramos un nuevo profesor en el sistema
         sistema.hacerLogin("nick8", "contra"); //sesion iniciada con un usuario profesor
@@ -123,7 +122,6 @@ public class SistemaTest {
 
     @Test
     public void crearEncuesta() {
-        int tamanioEsperado = sistema.getEntradasParaRevisar().size()+1;//Determinamos el tamaño esperado para el assert
         Usuario usr = sistema.registrarUsuario("nick11", "nombre", "apellidos", "contra", "profe@urjc.es");//Registramos un profesor el cual si es capaz de crear una encuesta
         sistema.hacerLogin("nick11", "contra");//Hacemos login con el profesor recien creado
         Encuesta e =sistema.crearEncuesta(usr, "titulo", "contenido", "r1", "r2", "r3", 0);//Creamos encuesta con el profesor
@@ -133,11 +131,28 @@ public class SistemaTest {
 
     @Test
     public void crearTextoPlano() {
-        int tamanioEsperado = sistema.getEntradasParaRevisar().size()+1;//Determinamos el tamaño esperado para el assert
         Usuario usr = sistema.registrarUsuario("nick12", "nombre", "apellidos", "contra", "alumno@alumnos.urjc.es");//Registramos un alumno el cual si es capaz de crear un texto plano
         sistema.hacerLogin("nick12", "contra");//Hacemos login con el alumno recien creado
         TextoPlano t = sistema.crearTextoPlano(usr, "titulo", "contenido", 0);//Creamos texto plano con el alumno
         assertEquals(1,sistema.getEntradasParaRevisar().size());//Comprobamos si el texto plano se ha creado correctamente
+        sistema.getEntradasParaRevisar().remove(t);
+    }
+
+    @Test
+    public void crearEjercicio() {
+        Usuario usr = sistema.registrarUsuario("nick13", "nombre", "apellidos", "contra", "profe@urjc.es");//Registramos un profesor el cual si es capaz de crear un ejercicio
+        sistema.hacerLogin("nick13", "contra");//Hacemos login con el profesor recien creado
+        Ejercicio e = sistema.crearEjercicio(usr, "titulo", "enunciado", 0);//Creamos ejercicio con el profesor
+        assertEquals(1,sistema.getEntradasParaRevisar().size());//Comprobamos si el ejercicio se ha creado correctamente
+        sistema.getEntradasParaRevisar().remove(e);
+    }
+
+    @Test
+    public void crearTipoMixto() {
+        Usuario usr = sistema.registrarUsuario("nick14", "nombre", "apellidos", "contra", "profe@urjc.es");//Registramos un profesor el cual si es capaz de crear un tipo mixto
+        sistema.hacerLogin("nick14", "contra");//Hacemos login con el profesor recien creado
+        TipoMixto t = sistema.CrearTipoMixto(usr, "titulo", "contenido", "r1", "r2", "r3", 0);//Creamos tipo mixto con el profesor
+        assertEquals(1,sistema.getEntradasParaRevisar().size());//Comprobamos si el tipo mixto se ha creado correctamente
         sistema.getEntradasParaRevisar().remove(t);
     }
 
@@ -161,7 +176,7 @@ public class SistemaTest {
         ArrayList<Entrada> entradasAceptadas = foro.getEntradas();
         assertTrue(entradasAceptadas.contains(e));
         //comprobamos que la entrada está en el correspondiente subforo
-        
+
     }
 
     @Test
@@ -175,7 +190,7 @@ public class SistemaTest {
         sistema.hacerLogin("admin", "contra");
         sistema.vetarEntradas((Administrador) sistema.getUsuarioConectado(),5);
         sistema.vetarEntradas((Administrador) sistema.getUsuarioConectado(),5);
-        
+
         //la entrada está correctamente añadida
         ArrayList<Entrada> entradas = sistema.getEntradasParaRevisar();
         assertTrue(entradas.isEmpty());
@@ -187,26 +202,6 @@ public class SistemaTest {
         ArrayList<Entrada> entradasAceptadas = foro.getEntradas();
         assertFalse(entradasAceptadas.contains(e));
         //comprobamos que la entrada no haya sido añadida al correspondiente subforo
-    }
-
-    @Test
-    public void crearEjercicio() {
-        int tamanioEsperado = sistema.getEntradasParaRevisar().size()+1;//Determinamos el tamaño esperado para el assert
-        Usuario usr = sistema.registrarUsuario("nick13", "nombre", "apellidos", "contra", "profe@urjc.es");//Registramos un profesor el cual si es capaz de crear un ejercicio
-        sistema.hacerLogin("nick13", "contra");//Hacemos login con el profesor recien creado
-        Ejercicio e = sistema.crearEjercicio(usr, "titulo", "enunciado", 0);//Creamos ejercicio con el profesor
-        assertEquals(1,sistema.getEntradasParaRevisar().size());//Comprobamos si el ejercicio se ha creado correctamente
-        sistema.getEntradasParaRevisar().remove(e);
-    }
-
-    @Test
-    public void crearTipoMixto() {
-        int tamanioEsperado = sistema.getEntradasParaRevisar().size()+1;//Determinamos el tamaño esperado para el assert
-        Usuario usr = sistema.registrarUsuario("nick14", "nombre", "apellidos", "contra", "profe@urjc.es");//Registramos un profesor el cual si es capaz de crear un tipo mixto
-        sistema.hacerLogin("nick14", "contra");//Hacemos login con el profesor recien creado
-        TipoMixto t = sistema.CrearTipoMixto(usr, "titulo", "contenido", "r1", "r2", "r3", 0);//Creamos tipo mixto con el profesor
-        assertEquals(1,sistema.getEntradasParaRevisar().size());//Comprobamos si el tipo mixto se ha creado correctamente
-        sistema.getEntradasParaRevisar().remove(t);
     }
 
     @Test
@@ -252,13 +247,13 @@ public class SistemaTest {
         sistema.votarEntradaPositivamente(e, sistema.getUsuarioConectado());
         sistema.hacerLogout();
         assertEquals(e,f.EntradaMasVotada());
-        //realmente lo unico demostrable es que la entrada e sea la más votada, que es la entrada que recibe 
+        //realmente lo unico demostrable es que la entrada e sea la más votada, que es la entrada que recibe
         //este método para después mostrarla a base de getters sobre la misma
     }
 
     @Test
     public void mostrarEntrada() {
-           //este metodo de la clase sistema es un conjunto de getters de una entrada y sus comentarios
-           //luego no tiene nada que demostrarse.
+        //este metodo de la clase sistema es un conjunto de getters de una entrada y sus comentarios, para luego devolverlos en un System.out.println
+        //luego no tiene nada que demostrarse.
     }
 }
