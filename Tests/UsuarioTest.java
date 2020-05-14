@@ -1,5 +1,4 @@
-package com.p3;
-
+package com.p3
 import org.junit.*;
 
 import static org.junit.Assert.*;

@@ -83,4 +83,13 @@ public class Usuario implements Serializable {
     public String getPass() {
         return pass;
     }
+
+    public int getDiasBaneado() {
+        return DiasBaneado;
+    }
+
+    public ArrayList<String> getNotificaciones() {
+        return notificaciones;
+    }
+    
 }

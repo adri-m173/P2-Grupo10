@@ -1,3 +1,5 @@
+package com.p3;
+import java.util.ArrayList;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -5,9 +7,16 @@ import static org.junit.Assert.*;
 public class SistemaTest {
     Sistema sistema = Sistema.getInstance();
 
-    @Test
+    @Test    
     public void guardarSistema() {
+        Sistema sistema2 = Sistema.getInstance();
+        //Creamos un objeto sistema con la clase getInstance y lo guardamos con la clase guardarSistema
+        sistema2.guardarSistema();
+        //Como ya existe un sistema y se ha guardado, al usar getInstance se llamara a la clase cargarSistema.
+        Sistema sistema3 = Sistema.getInstance();
+        assertEquals(sistema2, sistema3);
     }
+
 
     @Test
     public void cargarSistema() {
@@ -56,7 +65,6 @@ public class SistemaTest {
 
     @Test 
     public void comprobarusuario() {
-        System.out.println("desde aqui");
         sistema.registrarUsuario("nick8", "nombre", "apellidos", "contra", "profe@urjc.es"); //Registramos un nuevo profesor en el sistema
         sistema.hacerLogin("nick8", "contra"); //sesion iniciada con un usuario profesor
         Usuario u = sistema.getUsuarioConectado();
@@ -89,11 +97,28 @@ public class SistemaTest {
 
     @Test
     public void subscribirse() {
-
+        sistema.hacerLogin("nick2", "contra");
+        sistema.subscribirse(sistema.getUsuarioConectado(), 0);
+        //el usuario se suscribe a un foro
+        ArrayList<Subforo> foros = sistema.getForo();
+        Subforo foro = foros.get(0);
+        ArrayList<Usuario> usuarios = foro.getUsuariosSubscritos();
+        Usuario u = usuarios.get(0);
+        //obtengo el usuario que se acaba de suscribir (u) ya que es el unico suscrito hasta el momento
+        assertEquals(u, sistema.getUsuarioConectado());
+        //el usuario suscrito y el conectado son los mismos
     }
 
     @Test
     public void darseBaja() {
+        sistema.hacerLogin("nick2","contra");
+        sistema.darseBaja(sistema.getUsuarioConectado(), 0);
+        //el subforo en principio no tiene usuarios subscritos
+        ArrayList<Subforo> foros = sistema.getForo();
+        Subforo foro = foros.get(0);
+        ArrayList<Usuario> usuarios = foro.getUsuariosSubscritos();
+        assert(usuarios.isEmpty());
+        //como el unico subscriptor lo hemos añadido en la prueba anterior, la lista está vacia
     }
 
     @Test
@@ -118,10 +143,50 @@ public class SistemaTest {
 
     @Test
     public void validarEntradas() {
+        sistema.registrarUsuario("profesorbaneado", "nombre", "apellidos", "contra", "profesor@urjc.es");
+        sistema.hacerLogin("profesorbaneado", "contra");
+        Encuesta e = sistema.crearEncuesta(sistema.getUsuarioConectado(), "titulo", "contenido", "r1", "r2", "r3", 0);
+        //la encuesta se crea y se añade a entradas para revisar
+        sistema.hacerLogout();
+        sistema.hacerLogin("nick", "contra");
+        sistema.validarEntradas((Administrador) sistema.getUsuarioConectado());
+        //la entrada está correctamente añadida
+        ArrayList<Entrada> entradas = sistema.getEntradasParaRevisar();
+        assertTrue(entradas.isEmpty());
+        //sabemos que la prueba ha sido validada ya que no hay entradas para revisar
+        assertTrue(sistema.comprobarusuario("profesorbaneado"));
+        //comprobamos que el usuario no haya sido baneado
+        ArrayList<Subforo> foros = sistema.getForo();
+        Subforo foro = foros.get(0);
+        ArrayList<Entrada> entradasAceptadas = foro.getEntradas();
+        assertTrue(entradasAceptadas.contains(e));
+        //comprobamos que la entrada está en el correspondiente subforo
+        
     }
 
     @Test
     public void vetarEntradas() {
+        sistema.registrarUsuario("profesorbaneado2", "nombre", "apellidos", "contra", "profesor2@urjc.es");
+        sistema.hacerLogin("profesorbaneado2", "contra");
+        Encuesta e = sistema.crearEncuesta(sistema.getUsuarioConectado(), "titulo", "contenido", "r1", "r2", "r3", 0);
+        //la encuesta se crea y se añade a entradas para revisar
+        sistema.hacerLogout();
+        sistema.registrarAdmin("admin", "nombre", "apellidos", "contra", "adminemail@urjc.es");
+        sistema.hacerLogin("admin", "contra");
+        sistema.vetarEntradas((Administrador) sistema.getUsuarioConectado(),5);
+        sistema.vetarEntradas((Administrador) sistema.getUsuarioConectado(),5);
+        
+        //la entrada está correctamente añadida
+        ArrayList<Entrada> entradas = sistema.getEntradasParaRevisar();
+        assertTrue(entradas.isEmpty());
+        //sabemos que la prueba ha sido vetada ya que no hay entradas para revisar
+        assertFalse(sistema.comprobarusuario("profesorbaneado2"));
+        //comprobamos que el usuario haya sido baneado
+        ArrayList<Subforo> foros = sistema.getForo();
+        Subforo foro = foros.get(0);
+        ArrayList<Entrada> entradasAceptadas = foro.getEntradas();
+        assertFalse(entradasAceptadas.contains(e));
+        //comprobamos que la entrada no haya sido añadida al correspondiente subforo
     }
 
     @Test
@@ -146,6 +211,7 @@ public class SistemaTest {
 
     @Test
     public void comentarEntrada() {
+        //Metodo comprobado correctamente en la clase entrada
     }
 
     @Test
@@ -170,9 +236,29 @@ public class SistemaTest {
 
     @Test
     public void mostrarEntradaSinLog() {
+        sistema.registrarUsuario("nick44", "nombre", "apellidos", "contra", "44@urjc.es");
+        sistema.registrarUsuario("nick33", "nombre", "apellidos", "contra", "33@urjc.es");
+        sistema.registrarAdmin("admin44", "nombre", "apellidos", "contra", "admin44@urjc.es");
+        sistema.hacerLogin("nick44", "contra");
+        Subforo f = sistema.iniciarSubforo(sistema.getUsuarioConectado(), "titulosubforo");
+        Entrada e =sistema.CrearTipoMixto(sistema.getUsuarioConectado(), "tituloVotado", "contenido", "r1", "r2", "r3", 0);
+        sistema.CrearTipoMixto(sistema.getUsuarioConectado(), "tituloNOVotado", "contenido", "r1", "r2", "r3", 0);
+        sistema.hacerLogout();
+        sistema.hacerLogin("admin44", "contra");
+        sistema.validarEntradas((Administrador) sistema.getUsuarioConectado());
+        sistema.validarEntradas((Administrador) sistema.getUsuarioConectado());
+        sistema.hacerLogout();
+        sistema.hacerLogin("nick33","contra");
+        sistema.votarEntradaPositivamente(e, sistema.getUsuarioConectado());
+        sistema.hacerLogout();
+        assertEquals(e,f.EntradaMasVotada());
+        //realmente lo unico demostrable es que la entrada e sea la más votada, que es la entrada que recibe 
+        //este método para después mostrarla a base de getters sobre la misma
     }
 
     @Test
     public void mostrarEntrada() {
+           //este metodo de la clase sistema es un conjunto de getters de una entrada y sus comentarios
+           //luego no tiene nada que demostrarse.
     }
 }
