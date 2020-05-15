@@ -19,6 +19,8 @@ public class SistemaTest {
 
     @Test
     public void cargarSistema() {
+        //la prueba de cargar sistema es la misma que la de guardar sistema, esto se ve reflejado 
+        //también en la clase Sistema.java.
     }
 
     @Test
